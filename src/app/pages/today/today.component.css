@@ -1,0 +1,15 @@
+
+
+.card-style-todo{
+ border: none;
+ margin-bottom: 2px;
+}
+
+.card-style-todo:hover{
+    background-color: #eeeeee;
+    border: #c5c3c3
+    
+}
+
+
+

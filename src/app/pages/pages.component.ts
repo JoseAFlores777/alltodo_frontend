@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { PrimeIcons, PrimeNGConfig } from 'primeng/api';
 
 declare function mainInitFunction():any;
 
@@ -11,10 +11,10 @@ declare function mainInitFunction():any;
 })
 export class PagesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private primengConfig: PrimeNGConfig) { }
 
   ngOnInit(): void {
-
+    this.primengConfig.ripple = true;
     mainInitFunction();
   }
 

@@ -24,6 +24,7 @@ import {SkeletonModule} from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
 
 
+
 @NgModule({
   declarations: [
     
@@ -51,7 +52,8 @@ import { TagModule } from 'primeng/tag';
     AvatarGroupModule,
     StepsModule,
     SkeletonModule,
-    TagModule
+    TagModule,
+    
     
     
     
