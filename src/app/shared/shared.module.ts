@@ -5,6 +5,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { FooterComponent } from './footer/footer.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 
 
 
@@ -23,7 +24,8 @@ import { AppRoutingModule } from '../app-routing.module';
   ],
   imports: [
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    PrimeNgModule
   ]
 })
 export class SharedModule { }
