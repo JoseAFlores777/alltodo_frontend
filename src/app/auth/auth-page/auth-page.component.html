@@ -1,55 +1,54 @@
-<div style="height: auto;" class="row g-0 auth-row">
-    <div id="auth-image-container" class="col-lg-8 col-md-6">
-        <div class="auth-cover-wrapper bg-primary-100">
-            <div class="auth-cover">
-                <div class="title text-center">
-                    <img src="../../../assets/app_Brand/Logo_svg/Color-Brand.svg" style="height: 150px; width: auto;"
-                        alt="" srcset="">
-                    <h2 class="mt-4 text-primary mb-10">Welcome!!</h2>
-                </div>
-                <div class="cover-image">
-                    <img src="assets/images/auth/signin-image.svg" alt="" />
-                </div>
-                <div class="shape-image">
-                    <img src="assets/images/auth/shape.svg" alt="" />
-                </div>
-            </div>
+<div style="height: auto" class="row g-0 auth-row">
+  <div id="auth-image-container" class="col-lg-8 col-md-6">
+    <div class="auth-cover-wrapper bg-primary-100">
+      <div class="auth-cover">
+        <div class="title text-center">
+          <img
+            src="../../../assets/app_Brand/Logo_svg/Color-Brand.svg"
+            style="height: 150px; width: auto"
+            alt=""
+            srcset=""
+          />
+          <h2 class="mt-4 text-primary mb-10">Welcome!!</h2>
         </div>
+        <div class="cover-image">
+          <img src="assets/images/auth/signin-image.svg" alt="" />
+        </div>
+        <div class="shape-image">
+          <img src="assets/images/auth/shape.svg" alt="" />
+        </div>
+      </div>
     </div>
-    <!-- end col -->
+  </div>
+  <!-- end col -->
 
-    <div id="auth-form-container" class="col-lg-4 col-md-6">
+  <div id="auth-form-container" class="col-lg-4 col-md-6">
+    <div class="signin-wrapper">
+      <div class="form-wrapper">
+        <img
+          id="brand-form-container"
+          src="../../../assets/app_Brand/Logo_svg/Color-Brand.svg"
+          alt=""
+          srcset=""
+        />
 
-
-        <div class="signin-wrapper">
-            <div class="form-wrapper">
-                <img id="brand-form-container" src="../../../assets/app_Brand/Logo_svg/Color-Brand.svg" alt=""
-                    srcset="">
-
-                <router-outlet></router-outlet>
-            </div>
-        </div>
-
-
-        <div class="singup-option ">
-            <p class="text-sm text-medium text-center text-gray">
-                Easy Sign Up With
-            </p>
-            <div class="
-                    button-group
-                    pt-15
-                    pb-40
-                    d-flex
-                    justify-content-center
-                    flex-wrap
-                  ">
-                <button class="main-btn danger-btn-outline m-2 ">
-                    <i class="lni lni-google mr-10"></i>
-                    Google
-                </button>
-            </div>
-        </div>
+        <router-outlet></router-outlet>
+        
+      </div>
     </div>
 
-    <!-- end col -->
+    <div class="singup-option">
+      <p class="text-sm text-medium text-center text-gray">Easy Sign Up With</p>
+      <div
+        class="button-group pt-15 pb-40 d-flex justify-content-center flex-wrap"
+      >
+        <button class="main-btn danger-btn-outline m-2">
+          <i class="lni lni-google mr-10"></i>
+          Google
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- end col -->
 </div>

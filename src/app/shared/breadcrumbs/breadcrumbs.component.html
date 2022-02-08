@@ -3,7 +3,7 @@
     <div class="row align-items-center">
         <div class="col-md-6">
             <div class="titlemb-30">
-                <h2>Title</h2>
+                <h2>{{title}}</h2>
             </div>
         </div>
         <!-- end col -->
@@ -12,10 +12,10 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item">
-                            <a href="#0">Dashboard</a>
+                            <a routerLink ="/dashboard" >Home</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Page
+                            {{title}}
                         </li>
                     </ol>
                 </nav>
