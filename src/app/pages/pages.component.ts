@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 
-
+declare function mainInitFunction():any;
 
 @Component({
   selector: 'app-pages',
@@ -15,7 +15,7 @@ export class PagesComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+    mainInitFunction();
   }
 
 }
