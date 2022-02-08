@@ -1,0 +1,30 @@
+/* hacer un media query */
+
+
+#brand-form-container{
+    height: 100px; 
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15px;
+    display: none;
+     
+}  
+
+
+
+@media (max-width: 843px) {
+    #auth-image-container {
+      display: none;
+    }
+    #auth-form-container{
+        flex: 0 0 auto;
+        width: 100%;
+    }
+    #brand-form-container{
+        display: block;
+    }
+  }
+
+
+

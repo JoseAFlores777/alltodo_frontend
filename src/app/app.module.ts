@@ -12,10 +12,12 @@ import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { PagesModule } from './pages/pages.module';
+import { E404Component } from './errorPages/e404/e404.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    E404Component,
 
   ],
   imports: [
