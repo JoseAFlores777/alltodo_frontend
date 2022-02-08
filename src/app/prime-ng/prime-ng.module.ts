@@ -25,7 +25,9 @@ import { TagModule } from 'primeng/tag';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    
+  ],
   exports: [
     ButtonModule,
     CardModule,
