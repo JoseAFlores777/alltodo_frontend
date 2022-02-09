@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit {
     {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
       email: [
         '',
         [
@@ -49,7 +50,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: AuthService,
+    private authService: AuthService,
     private fb: FormBuilder,
     private renderer: Renderer2,
     private customValidators: ValidatorService,
@@ -119,13 +120,15 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-
-    this.userService.signup(this.registerForm.value)
+    this.authService.signup(this.registerForm.value)
       .subscribe(resp => {
 
-        
-        this.verifyEmailModal(resp.user.email,resp.user.uid)
-
+        this.authService.sendVerificationEmail(resp.user.email).subscribe((EmailSent) => {
+          if (EmailSent) {
+            this.verifyEmailModal(resp.user.email,resp.user.id);
+          }
+        });
+        this.verifyEmailModal(resp.user.email,resp.user.id)
 
       }, (err) => {
         Swal.fire('Error', err.error.msg, 'error' );
@@ -149,7 +152,7 @@ export class RegisterComponent implements OnInit {
       timer: 60000,
       showConfirmButton: false,
       confirmButtonText: 'Continue <i class="fa fa-arrow-right"></i>',
-      allowOutsideClick: false,
+      allowOutsideClick: true,
       timerProgressBar: true,
       customClass: {
         title: 'SwalTitle',
@@ -172,7 +175,8 @@ export class RegisterComponent implements OnInit {
     }).then((result) => {
       /* Read more about handling dismissals below */
       
-        this.userService.isEmailVerified(email)
+        this.authService
+  .isEmailVerified(email)
         .subscribe(EmailVerified => {
             
             if (EmailVerified) {

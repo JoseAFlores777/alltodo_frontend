@@ -97,16 +97,16 @@ export class LoginComponent implements OnInit {
     }
     this.authService.login(this.loginForm.value).subscribe(
       (resp) => {
-        console.log('object',resp.user.Id);
-        if (!resp.userEmailVerified) {
+        
+        if (!resp.user.verifiedEmail) {
           this.sendVerificationEmail(this.loginForm.get('email')?.value,resp.user.Id);
         } else {
           this.router.navigateByUrl('/');
         }
       },
       (err) => {
-        this.failedAttempts++        
-        Swal.fire('Error', err.error.msg, 'error');
+        this.failedAttempts++   
+        Swal.fire('Error', err.error, 'error');
         if (this.failedAttempts >2) {
           
           this.forgotPasswordModal(this.loginForm.get('email')?.value)
