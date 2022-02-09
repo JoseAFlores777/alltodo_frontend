@@ -19,7 +19,10 @@ import { MessageService } from 'primeng/api';
 })
 export class TodayComponent implements OnInit {
 
-  value1:number = 1
+  value1: number = 1
+  
+  Title_forTodo:string = "All to do"
+  Title_completed:string = "Finished"
 
   constructor( private messageService: MessageService, private confirmationService: ConfirmationService) { }
 

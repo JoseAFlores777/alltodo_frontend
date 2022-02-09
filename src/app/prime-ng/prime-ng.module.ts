@@ -22,7 +22,9 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import {StepsModule} from 'primeng/steps';
 import {SkeletonModule} from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
-
+import { TabViewModule } from 'primeng/tabview';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
 
 
 @NgModule({
@@ -53,6 +55,10 @@ import { TagModule } from 'primeng/tag';
     StepsModule,
     SkeletonModule,
     TagModule,
+    TabViewModule,
+    OverlayPanelModule,
+    DynamicDialogModule
+    
     
     
     

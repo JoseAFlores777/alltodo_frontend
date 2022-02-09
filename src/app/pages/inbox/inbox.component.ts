@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InboxComponent implements OnInit {
 
+  Title_forTodo:string = "All to do"
+  Title_completed:string = "All tasks Completed"
+
   constructor() { }
 
   ngOnInit(): void {

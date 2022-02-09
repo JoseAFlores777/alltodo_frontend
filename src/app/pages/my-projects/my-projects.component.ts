@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MyProjectsComponent implements OnInit {
 
+  Title_forTodo:string = "All to do"
+  Title_completed:string = "Finished"
+
   constructor() { }
 
   ngOnInit(): void {

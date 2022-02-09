@@ -10,6 +10,10 @@ import { InboxComponent } from './inbox/inbox.component';
 import { MyProjectsComponent } from './my-projects/my-projects.component';
 import { TodayComponent } from './today/today.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
+import { TodoManageComponent } from './todo-manage/todo-manage.component';
+import { ComponentsModule } from '../components/components.module';
+
+
 
 
 
@@ -22,7 +26,8 @@ import { UpcomingComponent } from './upcoming/upcoming.component';
     InboxComponent,
     MyProjectsComponent,
     TodayComponent,
-    UpcomingComponent
+    UpcomingComponent,
+    TodoManageComponent
   ],
   exports: [
     PagesComponent,
@@ -37,7 +42,9 @@ import { UpcomingComponent } from './upcoming/upcoming.component';
     CommonModule,
     SharedModule,
     PagesRoutingModule,
-    PrimeNgModule
+    PrimeNgModule,
+    ComponentsModule
+    
     
   ]
 })

@@ -1,24 +1,36 @@
 <h1 class="mb-5">Login</h1>
-<form action="#">
+<form autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()">
   <div class="row">
     <div class="col-12">
       <div class="input-style-1">
         <label>Email</label>
-        <input type="email" placeholder="Email" />
+        <input type="email" placeholder="Email" formControlName='email' (change)="resetAttemps()" id="email"  #inputEmail />
+        <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+          *ngIf="isValidInput('email')">
+          {{emailErrorsMsj}}
+        </span>
       </div>
     </div>
     <!-- end col -->
     <div class="col-12">
       <div class="input-style-1">
-        <label>Password</label>
-        <input type="password" placeholder="Password" />
+        <label>Password
+          <a (click)="seePwd()">
+            <i id="eye" class="{{ pdwIsVisible ? 'far fa-eye':'far fa-eye-slash'}}"></i>
+          </a>
+        </label>
+        <input id="pass" #pwd  type="password" placeholder="Password"name="pass" formControlName='password' />
+        <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+        *ngIf="isValidInput('password')">
+            The password is required
+        </span>
       </div>
     </div>
     <!-- end col -->
 
     <div class="col">
       <div class="float-end mb-30">
-        <a href="#0" class="hover-underline">Forgot Password?</a>
+        <a (click)="forgotPassword()" style="cursor: pointer;" class="hover-underline">Forgot Password?</a>
       </div>
     </div>
     <!-- end col -->
@@ -37,3 +49,7 @@
   Don’t have any account yet?
   <a routerLink="/auth/register">Create an account</a>
 </p>
+
+
+
+

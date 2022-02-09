@@ -1,0 +1,6 @@
+<div *ngIf='loaderService.isLoading |async'>
+    <p-progressBar
+    [style]="{'background':'#007bff','background-color':'white', 'height':'4px'}"
+    mode="indeterminate">
+    </p-progressBar>
+</div>

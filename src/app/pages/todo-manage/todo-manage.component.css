@@ -1,0 +1,26 @@
+
+
+.card-style-todo{
+    border: none;
+    margin-bottom: 2px;
+   }
+   
+   .card-style-todo:hover{
+       background-color: #eeeeee;
+       border: #c5c3c3
+       
+   }
+   
+
+
+:host ::ng-deep .p-tabview-panels {
+
+    background: #fff;
+    box-sizing: border-box;
+    padding: 25px 30px;
+    position: relative;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0px 10px 20px rgb(200 208 216 / 30%);
+    border-bottom-right-radius: 22px !important;
+    border-bottom-left-radius: 22px !important;
+}

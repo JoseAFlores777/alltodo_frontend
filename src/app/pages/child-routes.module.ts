@@ -8,6 +8,7 @@ import { InboxComponent } from './inbox/inbox.component';
 import { TodayComponent } from './today/today.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
 import { MyProjectsComponent } from './my-projects/my-projects.component';
+import { TodoManageComponent } from './todo-manage/todo-manage.component';
 
 
 const childRoutes: Routes = [
