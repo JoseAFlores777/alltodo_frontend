@@ -134,7 +134,7 @@ export class LoginComponent implements OnInit {
       title: 'Check your email!',
       html:
         `<h4>We have sent a verification email to:</h4><p><p> <b>${email}</b> <p><p>` +
-        '<div style="margin-top:50px;">Check your email <b>ahora</b></div> <p>' +
+        '<div style="margin-top:50px;">Check your email <b>now</b></div> <p>' +
         '<div class="SwalCountdown" ><strong></strong> Seconds</div>',
       timer: 60000,
       showConfirmButton: false,

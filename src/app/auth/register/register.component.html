@@ -1,37 +1,61 @@
 <h1 class="mb-5">Register</h1>
-<form action="#">
+<form autocomplete="off" [formGroup]='registerForm' (ngSubmit)='register()'>
   <div class="row">
     <div class="col-12">
       <div class="input-style-1">
         <label>First Name</label>
-        <input type="text" placeholder="First Name" />
+        <input type="text" placeholder="First Name" name="name" formControlName="firstName" />
+        <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+        *ngIf="isValidInput('firstName')">
+            The first name is required
+        </span>
       </div>
     </div>
     <div class="col-12">
       <div class="input-style-1">
         <label>Last Name</label>
-        <input type="text" placeholder="Last Name" />
+        <input type="text" placeholder="Last Name" name="lastname" formControlName='lastName'/>
+        <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+        *ngIf="isValidInput('lastName')">
+            The last name is required
+        </span>
       </div>
     </div>
     <!-- end col -->
     <div class="col-12">
       <div class="input-style-1">
         <label>Email</label>
-        <input type="email" placeholder="Email" />
+        <input type="email" placeholder="Email" name="email" autocomplete="off" formControlName='email' inputmode="text"/>
+        <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+        *ngIf="isValidInput('email')">
+            {{emailErrorsMsj}}
+        </span>
       </div>
     </div>
     <!-- end col -->
     <div class="col-12">
       <div class="input-style-1">
-        <label>Password</label>
-        <input type="password" placeholder="Password" />
+        <label>Password
+          <a (click)="seePwd()">
+            <i id="eye" class="{{ pdwIsVisible ? 'far fa-eye':'far fa-eye-slash'}}"></i>
+        </a>
+        </label>
+        <input #pwd type="password" placeholder="Password" name="pass" formControlName='password'/>
+        <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+        *ngIf="isValidInput('password')">
+           {{passErrorsMsj}}
+        </span>
       </div>
     </div>
     <!-- end col -->
     <div class="col-12">
       <div class="input-style-1">
         <label>Confirm Password</label>
-        <input type="password2" placeholder="Password" />
+        <input  #pwd2  placeholder="Password" type="password" name="pass" formControlName='password2'/>
+        <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+        *ngIf="isValidInput('password2')">
+            The password is not the same
+        </span>
       </div>
     </div>
     <!-- end col -->
