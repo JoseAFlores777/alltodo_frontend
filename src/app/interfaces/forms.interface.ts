@@ -1,3 +1,4 @@
+import { User } from "../models/user.model";
 
 
 export interface LoginForm{
@@ -10,4 +11,9 @@ export interface RegisterForm{
     email: string,
     password: string,
     
+}
+
+export interface Welcome {
+    jwt:  string;
+    user: User;
 }

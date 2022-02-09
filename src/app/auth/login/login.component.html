@@ -19,7 +19,7 @@
             <i id="eye" class="{{ pdwIsVisible ? 'far fa-eye':'far fa-eye-slash'}}"></i>
           </a>
         </label>
-        <input id="pass" #pwd  type="password" placeholder="Password"name="pass" formControlName='password' />
+        <input id="pass" #pwd  type="password" placeholder="Password" name="pass" formControlName='password' />
         <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
         *ngIf="isValidInput('password')">
             The password is required
@@ -30,7 +30,7 @@
 
     <div class="col">
       <div class="float-end mb-30">
-        <a (click)="forgotPassword()" style="cursor: pointer;" class="hover-underline">Forgot Password?</a>
+        <a (click)="forgotPasswordModal()" style="cursor: pointer;" class="hover-underline">Forgot Password?</a>
       </div>
     </div>
     <!-- end col -->

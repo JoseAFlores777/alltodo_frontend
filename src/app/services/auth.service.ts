@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { LoginForm, RegisterForm } from '../interfaces/forms.interface';
+import { LoginForm, RegisterForm, Welcome } from '../interfaces/forms.interface';
+
 
 const base_url = environment.base_url;
 
@@ -97,17 +98,23 @@ export class AuthService {
   }
 
 
+
+
   login(formData: LoginForm) {
-    return this.http.post(`${base_url}/auth`, formData).pipe(
-      tap((resp: any) => {
-        this.saveInLocalStorage(resp.jwt);
-      })
-    );
+    let form_data = new FormData();
+    form_data.append('email', formData.email);
+    form_data.append('password', formData.password);
+
+    return this.http.post(`${base_url}/auth`, form_data).subscribe((resp: any) => {
+      console.log(resp);
+
+    });
   }
 
   signup(formData: RegisterForm) {
     return this.http.post(`${base_url}/auth/signup`, formData).pipe(
       tap((resp: any) => {
+
         this.saveInLocalStorage(resp.jwt);
       })
     );

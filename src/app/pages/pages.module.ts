@@ -12,6 +12,7 @@ import { TodayComponent } from './today/today.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
 import { TodoManageComponent } from './todo-manage/todo-manage.component';
 import { ComponentsModule } from '../components/components.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 
@@ -43,7 +44,8 @@ import { ComponentsModule } from '../components/components.module';
     SharedModule,
     PagesRoutingModule,
     PrimeNgModule,
-    ComponentsModule
+    ComponentsModule,
+    SweetAlert2Module.forRoot(),
     
     
   ]
