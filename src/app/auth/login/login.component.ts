@@ -89,39 +89,34 @@ export class LoginComponent implements OnInit {
     return '';
   }
 
+
   login() {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
-    // this.authService.login(this.loginForm.value).subscribe(
-    //   (resp) => {
-    //     console.log("rrrr2",resp);
-    //     // if (!resp.user.verifiedEmail) {
-    //     //   this.sendVerificationEmail(
-    //     //     this.loginForm.get('email')?.value,
-    //     //     resp.user
-    //     //   );
-    //     // }
-    //   },
-    //   (err) => {
-    //     this.failedAttempts++;
-    //     Swal.fire('Error', err.error, 'error');
-    //     if (this.failedAttempts > 2) {
-    //       this.forgotPasswordModal(this.loginForm.get('email')?.value);
-    //     }
-    //   }
-    // );
-    try {
-      
-      this.authService.login(this.loginForm.value);
-    } catch (error) {
-      console.log(error);
-    }
+    this.authService.login(this.loginForm.value).subscribe(
+      (resp) => {
+        console.log('object',resp.user.Id);
+        if (!resp.userEmailVerified) {
+          this.sendVerificationEmail(this.loginForm.get('email')?.value,resp.user.Id);
+        } else {
+          this.router.navigateByUrl('/');
+        }
+      },
+      (err) => {
+        this.failedAttempts++        
+        Swal.fire('Error', err.error.msg, 'error');
+        if (this.failedAttempts >2) {
+          
+          this.forgotPasswordModal(this.loginForm.get('email')?.value)
+        }
+      }
+    );
   }
 
   sendVerificationEmail(email: string, id: string) {
-    Swal.fire('¡Atención!', 'Todavía no verificas tu correo', 'warning');
+    Swal.fire('Attention!', "You haven't verified your email yet", 'warning');
     localStorage.removeItem('Authorization');
 
 
@@ -136,15 +131,15 @@ export class LoginComponent implements OnInit {
     let timerInterval: any;
 
     Swal.fire({
-      title: '¡Verifica tu correo!',
+      title: 'Check your email!',
       html:
-        `<h4>Hemos enviado un correo de verificación a:</h4><p><p> <b>${email}</b> <p><p>` +
-        '<div style="margin-top:50px;">Verifica tu correo <b>ahora</b></div> <p>' +
-        '<div class="SwalCountdown" ><strong></strong> Segundos</div>',
+        `<h4>We have sent a verification email to:</h4><p><p> <b>${email}</b> <p><p>` +
+        '<div style="margin-top:50px;">Check your email <b>ahora</b></div> <p>' +
+        '<div class="SwalCountdown" ><strong></strong> Seconds</div>',
       timer: 60000,
       showConfirmButton: false,
       confirmButtonText: 'Continuar <i class="fa fa-arrow-right"></i>',
-      allowOutsideClick: false,
+      allowOutsideClick: true,
       timerProgressBar: true,
       customClass: {
         title: 'SwalTitle',
@@ -166,15 +161,14 @@ export class LoginComponent implements OnInit {
 
       this.authService.isEmailVerified(email).subscribe((EmailVerified) => {
         if (EmailVerified) {
-          Swal.fire('¡Genial!', 'Email Verificado', 'success');
+          Swal.fire('Great!', 'Your Email is verified', 'success');
           console.log('is verified');
           this.router.navigateByUrl('/');
         } else {
-          Swal.fire('Email No Verificado', 'Acceso Denegado', 'warning');
+          Swal.fire("Your Email isn't verified", 'Access denied', 'warning');
           console.log('is verified');
-          this.router.navigateByUrl('/auth/login');
-          localStorage.removeItem('x-token');
-          localStorage.removeItem('menu');
+          this.router.navigateByUrl('/auth');
+          localStorage.removeItem('Authorization');
         }
       });
     });

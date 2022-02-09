@@ -97,19 +97,17 @@ export class AuthService {
       );
   }
 
-
-
-
   login(formData: LoginForm) {
     let form_data = new FormData();
     form_data.append('email', formData.email);
     form_data.append('password', formData.password);
-
-    return this.http.post(`${base_url}/auth`, form_data).subscribe((resp: any) => {
-      console.log(resp);
-
-    });
+    return this.http.post(`${base_url}/auth`, form_data).pipe(
+      tap((resp: any) => {
+        this.saveInLocalStorage(resp.token);
+      })
+    );
   }
+
 
   signup(formData: RegisterForm) {
     return this.http.post(`${base_url}/auth/signup`, formData).pipe(
