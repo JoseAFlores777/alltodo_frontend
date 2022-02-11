@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PagesComponent } from './pages.component';
 import { ProfileComponent } from './profile/profile.component';
@@ -14,6 +14,7 @@ import { TodoManageComponent } from './todo-manage/todo-manage.component';
 import { ComponentsModule } from '../components/components.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '../forms/forms.module';
 
 
 
@@ -29,7 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MyProjectsComponent,
     TodayComponent,
     UpcomingComponent,
-    TodoManageComponent
+    TodoManageComponent,
+    
   ],
   exports: [
     PagesComponent,
@@ -47,9 +49,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     PrimeNgModule,
     ComponentsModule,
     SweetAlert2Module.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
     
     
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 })
 export class PagesModule { }

@@ -17,10 +17,12 @@ import { PagesModule } from './pages/pages.module';
 import { E404Component } from './errorPages/e404/e404.component';
 import { LoaderInterceptorService } from './components/loader/interceptors/loader-interceptors.service';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     E404Component,
+    
 
   ],
   imports: [

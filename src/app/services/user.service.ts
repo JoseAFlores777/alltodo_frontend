@@ -22,12 +22,7 @@ export class UserService {
 
 
   updateUser(id: string, formData: UpdateUserForm) {
-    return this.http.put(`${base_url}/users/${id}`, formData, this.authService.headers)
-      .pipe(
-        map((resp: any) => {      
-        this.authService.validateToken()
-        .subscribe()
-        })
-      );
+    return this.http.put(`${base_url}/users/${id}`, formData, this.authService.headers);
+
   }
 }

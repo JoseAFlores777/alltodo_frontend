@@ -17,7 +17,7 @@ const childRoutes: Routes = [
   {path: 'inbox', component: InboxComponent, data: { title: 'Inbox' }},
   {path: 'today', component: TodayComponent, data: { title: 'Today' }},
   {path: 'upcoming', component: UpcomingComponent, data: { title: 'Upcoming' }},
-  {path: 'my-projects', component: MyProjectsComponent, data: { title: 'My Projects' }},
+  {path: 'my-projects/:id', component: MyProjectsComponent, data: { title: 'My Projects' }},
   
 ]
 

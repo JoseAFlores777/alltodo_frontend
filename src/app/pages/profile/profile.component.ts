@@ -119,7 +119,7 @@ export class ProfileComponent implements OnInit {
     this.userService.updateUser(this.user!.id, this.updateUserForm.value)
       .subscribe(
         (resp:any) => {
-          console.log("component", resp);
+          this.authService.validateToken()
           Swal.fire('Great!', "Your changes have been recorded", 'success');
         }, (err) => { 
           console.log(err)

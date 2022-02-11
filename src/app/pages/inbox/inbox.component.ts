@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoTypeView, TypeView_Enum } from '../../models/TodoTypeView';
 
 @Component({
   selector: 'app-inbox',
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InboxComponent implements OnInit {
 
-  Title_forTodo:string = "All to do"
+  
+  todoTypeView: TodoTypeView = new TodoTypeView(TypeView_Enum.INBOX,"All to Do","Completed");
   Title_completed:string = "All tasks Completed"
 
   constructor() { }

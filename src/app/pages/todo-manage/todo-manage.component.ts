@@ -1,4 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { TodoTypeView } from '../../models/TodoTypeView';
+import { Project } from '../../models/project.model';
 
 
 @Component({
@@ -8,8 +10,11 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class TodoManageComponent implements OnInit {
 
-  @Input() Title_forTodo!: string;
-  @Input() Title_completed!: string;
+  @ViewChild('btnProject') btnProject!: ElementRef;
+  @ViewChild('btnSchedule') btnSchedule!: ElementRef;
+
+  @Input() todoTypeView!: TodoTypeView;
+  @Input() currentProject!: Project;
 
   visibilityTodoDialog: boolean = false;
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
+import { TodoTypeView, TypeView_Enum } from '../../models/TodoTypeView';
 
 
 @Component({
@@ -21,8 +22,8 @@ export class TodayComponent implements OnInit {
 
   value1: number = 1
   
-  Title_forTodo:string = "All to do"
-  Title_completed:string = "Finished"
+  todoTypeView: TodoTypeView = new TodoTypeView(TypeView_Enum.PROJECTS,"For Today","Completed");
+  
 
   constructor( private messageService: MessageService, private confirmationService: ConfirmationService) { }
 

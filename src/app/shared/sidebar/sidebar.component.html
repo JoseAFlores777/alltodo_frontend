@@ -78,16 +78,16 @@
         <ul id="ddmenu_1" class="collapse dropdown-nav">
 
           <li >
-            <button id="btn-new-project" type="button" class="btn btn-outline-primary btn-sm ">New Project</button>
+            <button id="btn-new-project"  (click)="showProjectDialog()" type="button" class="btn btn-outline-primary btn-sm ">New Project</button>
           </li>
 
 
-          <li>
-            <a routerLink="/dashboard/my-projects">
+          <li *ngFor="let project of projects">
+            <a routerLink="/dashboard/my-projects/{{project.id}}">
 
                 <i class="pi pi-sitemap"></i>
 
-              <span class="text">Project 1</span>
+              <span class="text">{{project.name}}</span>
             </a>
           </li>
 
@@ -135,3 +135,7 @@
 <div class="overlay"></div>
 
 <!-- ======== sidebar-nav end =========== -->
+
+
+
+<app-project-form [display]="display" [action]="action"  (isHide)="closeProjectDialog()"></app-project-form>

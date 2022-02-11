@@ -24,7 +24,8 @@ import {SkeletonModule} from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
 import { TabViewModule } from 'primeng/tabview';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import {ColorPickerModule} from 'primeng/colorpicker';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
     TagModule,
     TabViewModule,
     OverlayPanelModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    ColorPickerModule
     
     
     

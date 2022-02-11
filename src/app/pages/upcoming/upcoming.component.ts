@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoTypeView, TypeView_Enum } from '../../models/TodoTypeView';
 
 @Component({
   selector: 'app-upcoming',
@@ -7,8 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UpcomingComponent implements OnInit {
 
-  Title_forTodo:string = "What's Next?"
-  Title_completed: string = "Advance Work"
+  todoTypeView: TodoTypeView = new TodoTypeView(TypeView_Enum.PROJECTS,"What's next?","Advance Work");
+  
   
   products!: String[];
 

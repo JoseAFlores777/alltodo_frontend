@@ -6,6 +6,9 @@ import { FooterComponent } from './footer/footer.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
+import { ProjectFormComponent } from '../forms/project-form/project-form.component';
+import { FormsModule } from '../forms/forms.module';
+
 
 
 
@@ -14,7 +17,8 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
     HeaderComponent,
     SidebarComponent,
     FooterComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    
   ],
   exports: [
     HeaderComponent,
@@ -25,7 +29,8 @@ import { PrimeNgModule } from '../prime-ng/prime-ng.module';
   imports: [
     CommonModule,
     AppRoutingModule,
-    PrimeNgModule
+    PrimeNgModule,
+    FormsModule
   ]
 })
 export class SharedModule { }
