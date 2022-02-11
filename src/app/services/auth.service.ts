@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { LoginForm, RegisterForm, Welcome } from '../interfaces/forms.interface';
+import { LoginForm, RegisterForm } from '../interfaces/forms.interface';
 
 
 const base_url = environment.base_url;
@@ -23,11 +23,11 @@ export class AuthService {
   ) {}
 
   get token(): string {
-    return localStorage.getItem('token') || '';
+    return localStorage.getItem('Authorization') || '';
   }
 
   get id(): string {
-    return localStorage.getItem('id') || '';
+    return this.user?.id!;
   }
 
   get headers() {
@@ -48,6 +48,8 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('Authorization');
+    this.router.navigateByUrl('auth')
+    
   }
 
   validateToken(): Observable<boolean> {
@@ -98,12 +100,9 @@ export class AuthService {
   }
 
   login(formData: LoginForm) {
-    let form_data = new FormData();
-    form_data.append('email', formData.email);
-    form_data.append('password', formData.password);
-    return this.http.post(`${base_url}/auth`, form_data).pipe(
+    return this.http.post(`${base_url}/auth`, formData).pipe(
       tap((resp: any) => {
-        this.saveInLocalStorage(resp.token);
+        this.saveInLocalStorage(resp.jwt);
       })
     );
   }
@@ -117,6 +116,8 @@ export class AuthService {
       })
     );
   }
+
+
 
   isEmailVerified(email: string): Observable<boolean> {
     return this.http.get(`${base_url}/auth/users/is-verified/${email}`).pipe(

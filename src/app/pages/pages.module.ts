@@ -13,6 +13,7 @@ import { UpcomingComponent } from './upcoming/upcoming.component';
 import { TodoManageComponent } from './todo-manage/todo-manage.component';
 import { ComponentsModule } from '../components/components.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -46,6 +47,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     PrimeNgModule,
     ComponentsModule,
     SweetAlert2Module.forRoot(),
+    ReactiveFormsModule
     
     
   ]

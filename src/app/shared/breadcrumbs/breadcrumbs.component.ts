@@ -7,7 +7,7 @@ import { filter,map } from 'rxjs/operators';
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.css']
 })
-export class BreadcrumbsComponent implements OnDestroy {
+export class BreadcrumbsComponent {
 
 
   public title: string = '';
@@ -23,9 +23,6 @@ export class BreadcrumbsComponent implements OnDestroy {
    }
 
 
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
 
   getRouteArgument() {
     return this.router.events

@@ -12,8 +12,10 @@ export interface RegisterForm{
     password: string,
     
 }
-
-export interface Welcome {
-    jwt:  string;
-    user: User;
+export interface UpdateUserForm{
+    firstName: string,
+    lastName: string,
+    gender: string,
+    email: string,
 }
+

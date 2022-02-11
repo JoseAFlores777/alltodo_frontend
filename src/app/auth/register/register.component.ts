@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/co
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { EmailValidatorService } from 'src/app/shared/validators/email-validator.service';
+import { isEmailExists } from 'src/app/shared/validators/email-validator.service';
 import { ValidatorService } from 'src/app/shared/validators/validator.service';
 import Swal from 'sweetalert2';
 
@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private renderer: Renderer2,
     private customValidators: ValidatorService,
-    private emailValidator: EmailValidatorService,
+    private emailValidator: isEmailExists,
     
   ) { }
 

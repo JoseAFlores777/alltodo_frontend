@@ -23,12 +23,14 @@
     </div>
     <!-- end col -->
     <div class="col-12">
-      <div class="input-style-1">
+      <div class="select-style-1">
         <label>Gender</label>
-        <select class="form-select"  formControlName="gender" >
-          <option value="Female">Female</option>
-          <option value="Male">Male</option>
-        </select>
+        <div class="select-position">
+          <select class="light-bg"  formControlName="gender" >
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+          </select>
+        </div>
         <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
         *ngIf="isValidInput('gender')">
             The gender is required
