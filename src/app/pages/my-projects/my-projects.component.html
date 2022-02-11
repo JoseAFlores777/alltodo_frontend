@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-12">
-        <div class="icon-card mb-30">
-            <div class="icon purple" [attr.color]="project.color">
-                <i class="pi pi-sitemap"></i>
+        <div class="icon-card ">
+            <div class="icon purple" [style.background-color]="project.color">
+                <i class="pi pi-sitemap" style="color: white;"></i>
             </div>
             <div class="content">
                 <h6 class="mb-10">Project Name</h6>
@@ -13,16 +13,17 @@
                     <span class="text-gray">({{totalTasksCompleted}} of {{totalTasks}} completed)</span>
                 </p>
             </div>
-            <button pButton type="button" (click)="showProjectDialog()" icon="pi pi-pencil" class="p-button-text float-end"></button>
+            <button pButton type="button" (click)="showProjectDialog()" icon="pi pi-pencil" class="p-button-text p-button-plain float-end"></button>
         </div>
+       
     </div>
 
 
-    <div class="col-12">
-        <app-todo-manage [todoTypeView]="todoTypeView" [currentProject]="project"></app-todo-manage>
+    <div class="col-12 mt-3">
+        <app-todo-manage [todoTypeView]="todoTypeView" [currentProject]="project" [color]="project.color"></app-todo-manage>
     </div>
 </div>
 <!-- End Icon Cart -->
 
 
-<app-project-form [display]="display" [action]="action" [IdProject]="getIdProject()"  (isHide)="closeProjectDialog()"></app-project-form>
+<app-project-form [display]="display" [action]="action"  (isHide)="closeProjectDialog()"></app-project-form>

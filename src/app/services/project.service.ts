@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { Project } from '../models/project.model';
 
 
 const base_url = environment.base_url;
@@ -12,7 +13,7 @@ const base_url = environment.base_url;
 })
 export class ProjectService {
 
-  
+  public currentProject!: Project;
 
   constructor(
     private http: HttpClient,
@@ -24,7 +25,12 @@ export class ProjectService {
   }
 
   chargeProjectById(id: string) { 
-      return this.http.get(`${base_url}/projects/${id}`, this.authService.headers);
+    return this.http.get(`${base_url}/projects/${id}`, this.authService.headers)
+      .pipe(
+        tap((project: any) => {
+           this.currentProject = project;
+         })
+    )
   }
 
 }

@@ -4,12 +4,18 @@
 /* media query de 500px para arriba */
 @media screen and (min-width: 500px) {
   #ProjectFormId{
-    width: 50vw;
+    width: 30vw;
   }
 }
 
-/* media query de 500px para abajo */
-@media only screen and (max-width: 500px) {
+/* media query de 1500px para abajo */
+@media only screen and (max-width: 1500px) {
+  #ProjectFormId{
+    width: 40vw;
+  }
+}
+/* media query de 800px para abajo */
+@media only screen and (max-width: 800px) {
   #ProjectFormId{
     width: 80vw;
   }

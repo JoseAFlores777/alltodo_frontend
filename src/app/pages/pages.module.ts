@@ -15,6 +15,8 @@ import { ComponentsModule } from '../components/components.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '../forms/forms.module';
+import { DirectivesModule } from '../directives/directives.module';
+
 
 
 
@@ -30,7 +32,8 @@ import { FormsModule } from '../forms/forms.module';
     MyProjectsComponent,
     TodayComponent,
     UpcomingComponent,
-    TodoManageComponent,
+    TodoManageComponent
+    
     
   ],
   exports: [
@@ -50,7 +53,8 @@ import { FormsModule } from '../forms/forms.module';
     ComponentsModule,
     SweetAlert2Module.forRoot(),
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    DirectivesModule
     
     
   ],

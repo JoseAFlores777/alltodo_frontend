@@ -1,5 +1,5 @@
 <p-dialog header="{{action}} Project" [draggable]="false" [(visible)]="display" [modal]="true" [responsive]="false"
-    [baseZIndex]="10000" appendTo="body" (onHide)="hideForm()" (onShow)="showForm()">
+    [baseZIndex]="10000" appendTo="body" (onHide)="hideForm()" >
 
 
 
@@ -23,6 +23,10 @@
 
 
         <p-footer>
+            <button *ngIf="action == 'Update'" pRipple  icon="pi pi-info-circle" class="btn btn-outline-danger mt-3 float-end" style="margin-left: 5px;">
+                <!-- [disabled]="nameForm.invalid || !nameForm.touched"> -->
+                Delete
+            </button>
             <button pRipple type="submit" icon="pi pi-info-circle" class="btn btn-outline-primary mt-3 float-end">
                 <!-- [disabled]="nameForm.invalid || !nameForm.touched"> -->
                 {{action}}

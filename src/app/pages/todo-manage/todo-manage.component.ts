@@ -15,6 +15,7 @@ export class TodoManageComponent implements OnInit {
 
   @Input() todoTypeView!: TodoTypeView;
   @Input() currentProject!: Project;
+  @Input() color!: string;
 
   visibilityTodoDialog: boolean = false;
 

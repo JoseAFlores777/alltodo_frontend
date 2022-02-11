@@ -8,6 +8,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { PrimeNgModule } from '../prime-ng/prime-ng.module';
 import { ProjectFormComponent } from '../forms/project-form/project-form.component';
 import { FormsModule } from '../forms/forms.module';
+import { DirectivesModule } from '../directives/directives.module';
+
 
 
 
@@ -18,6 +20,7 @@ import { FormsModule } from '../forms/forms.module';
     SidebarComponent,
     FooterComponent,
     BreadcrumbsComponent,
+    
     
   ],
   exports: [
@@ -30,7 +33,8 @@ import { FormsModule } from '../forms/forms.module';
     CommonModule,
     AppRoutingModule,
     PrimeNgModule,
-    FormsModule
+    FormsModule,
+    DirectivesModule
   ]
 })
 export class SharedModule { }
