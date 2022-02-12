@@ -1,4 +1,5 @@
 import { User } from "../models/user.model";
+import { Project } from '../models/project.model';
 
 
 export interface LoginForm{
@@ -23,6 +24,16 @@ export interface ProjectForm{
     name: string,
     description: string,
     color: string
+}
+
+export interface TodoForm{
+    
+    title: string ,
+    description: string ,
+    completed: boolean ,
+    project:  Project ,
+    expirationDate: Date ,
+    
 }
 
 

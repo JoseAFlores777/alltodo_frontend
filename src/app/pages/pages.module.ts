@@ -54,7 +54,8 @@ import { DirectivesModule } from '../directives/directives.module';
     SweetAlert2Module.forRoot(),
     ReactiveFormsModule,
     FormsModule,
-    DirectivesModule
+    DirectivesModule,
+    FormsModule
     
     
   ],
