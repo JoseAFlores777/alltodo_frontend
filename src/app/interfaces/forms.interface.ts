@@ -19,5 +19,11 @@ export interface UpdateUserForm{
     email: string,
 }
 
+export interface ProjectForm{
+    name: string,
+    description: string,
+    color: string
+}
+
 
 

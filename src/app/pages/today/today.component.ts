@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
 import { MessageService } from 'primeng/api';
-import { TodoTypeView, TypeView_Enum } from '../../models/TodoTypeView';
-
+import { TodoTypeView } from '../../models/TodoTypeView';
+import { TypeView_Enum } from '../../models/enums';
 
 @Component({
   selector: 'app-today',

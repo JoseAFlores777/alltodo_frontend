@@ -1,32 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
 import { Project } from '../../models/project.model';
+import { actionType_Enum } from '../../models/enums';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, DoCheck {
 
   public projects: Project[] = [];
   public isCharging: boolean = false;
   display: boolean = false;
-  action: string = "Create";
+  action: string = actionType_Enum.CREATE;;
 
-  constructor(private projectService:ProjectService) { }
+  constructor(private projectService: ProjectService) {
+
+
+    this.chargeProjects();
+   }
+
 
   ngOnInit(): void {
-    this.chargeProjects();
+  }
+  
+  ngDoCheck(): void {
+     this.projects = this.projectService.projects;
   }
 
   showProjectDialog() {
     this.display = true;
-    // this.nameForm.reset({
-    //   firstName: this.user?.firstName,
-    //   lastName: this.user?.lastName,
-    // });
   }
 
   closeProjectDialog() {
@@ -37,10 +42,7 @@ export class SidebarComponent implements OnInit {
   chargeProjects() { 
     this.isCharging = true;
     this.projectService.chargeProjects()
-      .subscribe((projects : any) => {
-        this.projects = projects;
-        this.isCharging = false;
-      })
+      .subscribe();
   }
 
 }

@@ -14,7 +14,7 @@ export class TodoCheckDirective {
   @HostListener('change', ['$event'])
   changeListener(event: any) {
     if (event.target.checked) {
-      console.log("skhfkajsfglaksdfjbgsd",this.eleRef.nativeElement.style)
+      // console.log("skhfkajsfglaksdfjbgsd",this.eleRef.nativeElement.style)
       this.eleRef.nativeElement.style.backgroundColor = this.color;
       this.eleRef.nativeElement.style.borderColor = this.color;
     } else {
