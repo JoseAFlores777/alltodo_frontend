@@ -34,6 +34,10 @@ export class TodoService {
     return this.http.post(`${base_url}/todos`, formData, this.authService.headers);
   }
 
+  updateTodo(id: string, formData: TodoForm) { 
+    return this.http.put(`${base_url}/todos/${id}`, formData, this.authService.headers);
+  }
+
 
 
 }

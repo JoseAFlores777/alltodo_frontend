@@ -12,6 +12,7 @@ import { OverlayPanel } from 'primeng/overlaypanel';
 import { timeType_Enum, actionType_Enum } from '../../models/enums';
 import { Todo } from '../../models/todo.model';
 import { TodoService } from '../../services/todo.service';
+import { title } from 'process';
 
 
 @Component({
@@ -63,7 +64,6 @@ export class TodoManageComponent implements OnInit, DoCheck {
     title: ['', Validators.required],
     description: ['', Validators.required],
     project: [null],
-    completed: [false],
     expirationDate: [new Date(), Validators.required],
   });
 
@@ -182,9 +182,9 @@ export class TodoManageComponent implements OnInit, DoCheck {
     this.todoService.createTodo(this.todoSaveForm.value)
       .subscribe(
         (response) => { 
-          this.hideAddTodoDialog();
           this.todoService.chargeTodos().subscribe();
           Swal.fire('Great!', 'Successfully created', 'success');
+          this.hideAddTodoDialog();
         }, (err) => { 
           Swal.fire('something goes wrong!', err.error, 'error');
         }
@@ -193,11 +193,33 @@ export class TodoManageComponent implements OnInit, DoCheck {
   }
   
   updateTodo(id: string) { 
-    console.log('idUser', id);
-    console.log('title', this.todoSaveForm.controls['title'].value);
-    console.log('description', this.todoSaveForm.controls['description'].value);
-    console.log('project', this.todoSaveForm.controls['project'].value);
-    console.log('expirationDate',this.todoSaveForm.controls['expirationDate'].value);
+    if (this.todoSaveForm.invalid) {
+      this.todoSaveForm.markAllAsTouched();
+      return;
+    }
+    if (this.selectedProject != null) {
+      this.todoSaveForm.controls['project'].setValue(this.selectedProject);
+
+    }
+    if (this.schedule_tmp != null) {
+      this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp);
+
+    }
+  
+    // console.log(this.todoSaveForm.value);
+    
+    this.todoService.updateTodo(id, this.todoSaveForm.value)
+      .subscribe(
+        (response) => { 
+          this.hideAddTodoDialog();
+          this.todoService.chargeTodos().subscribe();
+          Swal.fire('Great!', 'Successfully updated', 'success');
+        }, (err) => { 
+          Swal.fire('something goes wrong!', err.error, 'error');
+        }
+      );
+    
+
   }
 
 

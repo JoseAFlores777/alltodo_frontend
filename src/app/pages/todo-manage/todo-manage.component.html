@@ -27,12 +27,15 @@
                     <div class="todo-check-box form-check checkbox-style checkbox-primary" style="margin: -18px;">
 
                         <input class="form-check-input" appTodoCheck
+                            
                             [color]="(todo.project != null) ? todo.project.color : '#5d657b'" 
                             type="checkbox"
                             [checked]="todo.completed" 
                             id="{{todo.id}}" />
 
-                        <label class="form-check-label" for="{{todo.id}}">{{todo.title}}</label>
+                        <label class="form-check-label" for="{{todo.id}}">
+                            {{todo.title}}
+                        </label>
 
                         <button pRipple (click)="confirmDeleteTodo($event, todo.id)" style="border: none;" type="button"
                             class="btn btn-outline-danger float-end btn-edit-todo"><i class="pi pi-trash"></i></button>
@@ -256,8 +259,11 @@
 
 
 <!-- Tasks -->
-<!-- 
-<h1>Selected Project </h1>
+
+<h1>todoSaveForm </h1>
+{{todoSaveForm.value| json}}
+
+<!-- <h1>Selected Project </h1>
 {{selectedProject | json}}
 
 <h1>currentProject </h1>
