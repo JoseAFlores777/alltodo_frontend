@@ -62,7 +62,8 @@ export class TodoManageComponent implements OnInit, DoCheck {
   todoSaveForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
-    projectId: [''],
+    project: [null],
+    completed: [false],
     expirationDate: [new Date(), Validators.required],
   });
 
@@ -123,7 +124,7 @@ export class TodoManageComponent implements OnInit, DoCheck {
     this.currentTodo = todo;
     
     if (todo.project != null) {
-      this.todoSaveForm.controls['projectId'].setValue( todo.project.id);
+      this.todoSaveForm.controls['project'].setValue( todo.project.id);
       this.selectedProject = todo.project;
     } else { 
       this.selectedProject = null;
@@ -163,21 +164,39 @@ export class TodoManageComponent implements OnInit, DoCheck {
   
   
   createTodo() {
-    this.todoSaveForm.controls['projectId'].setValue(this.selectedProject!.id);
-    this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp);
+    if (this.selectedProject != null) {
+      this.todoSaveForm.controls['project'].setValue(this.selectedProject);
+      // console.log('project', this.todoSaveForm.controls['project'].value);
+    }
+    if (this.schedule_tmp != null) {
+      this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp);
+      // console.log('expirationDate',this.todoSaveForm.controls['expirationDate'].value);
+    }
   
-    console.log('title', this.todoSaveForm.controls['title'].value);
-    console.log('description', this.todoSaveForm.controls['description'].value);
-    console.log('projectId', this.todoSaveForm.controls['projectId'].value);
-    console.log('expirationDate',this.todoSaveForm.controls['expirationDate'].value);
+  
+    // console.log('title', this.todoSaveForm.controls['title'].value);
+    // console.log('description', this.todoSaveForm.controls['description'].value);
+
+    // console.log(this.todoSaveForm.value);
     
+    this.todoService.createTodo(this.todoSaveForm.value)
+      .subscribe(
+        (response) => { 
+          this.hideAddTodoDialog();
+          this.todoService.chargeTodos().subscribe();
+          Swal.fire('Great!', 'Successfully created', 'success');
+        }, (err) => { 
+          Swal.fire('something goes wrong!', err.error, 'error');
+        }
+      );
+
   }
   
   updateTodo(id: string) { 
     console.log('idUser', id);
     console.log('title', this.todoSaveForm.controls['title'].value);
     console.log('description', this.todoSaveForm.controls['description'].value);
-    console.log('projectId', this.todoSaveForm.controls['projectId'].value);
+    console.log('project', this.todoSaveForm.controls['project'].value);
     console.log('expirationDate',this.todoSaveForm.controls['expirationDate'].value);
   }
 

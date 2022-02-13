@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs/operators';
+import { TodoForm } from '../interfaces/forms.interface';
 
 const base_url = environment.base_url;
 
@@ -29,7 +30,9 @@ export class TodoService {
       )
   }
 
-
+  createTodo(formData: TodoForm) {
+    return this.http.post(`${base_url}/todos`, formData, this.authService.headers);
+  }
 
 
 
