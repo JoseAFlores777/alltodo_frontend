@@ -37,8 +37,8 @@
                             {{todo.title}}
                         </label>
 
-                        <button pRipple (click)="confirmDeleteTodo($event, todo.id)" style="border: none;" type="button"
-                            class="btn btn-outline-danger float-end btn-edit-todo"><i class="pi pi-trash"></i></button>
+                        <a pRipple (click)="confirmDeleteTodo($event, todo.id)" style="border: none;" type="button"
+                            class="btn btn-outline-danger float-end btn-edit-todo"><i class="pi pi-trash"></i></a>
                             
                         <button pRipple style="border: none;" type="button" (click)="showEditTodoDialog(todo)"
                             class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-pencil"></i></button>
@@ -104,7 +104,9 @@
             </div>
         </form>
 
+        <p-toast></p-toast>
 
+        <p-confirmPopup [baseZIndex]="30000"></p-confirmPopup>
 
 
 

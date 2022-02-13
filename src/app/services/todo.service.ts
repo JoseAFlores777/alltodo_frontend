@@ -38,6 +38,10 @@ export class TodoService {
     return this.http.put(`${base_url}/todos/${id}`, formData, this.authService.headers);
   }
 
+  deleteTodo(id: string) { 
+    return this.http.delete(`${base_url}/todos/${id}`, this.authService.headers);
+  }
+
 
 
 }

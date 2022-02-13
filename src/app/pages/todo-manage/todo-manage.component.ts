@@ -277,6 +277,14 @@ export class TodoManageComponent implements OnInit, DoCheck {
    }
   
   deleteTodo(id: string) { 
-    console.log('idUser', id);
+    this.todoService.deleteTodo(id)
+      .subscribe(
+        (response) => { 
+          this.todoService.chargeTodos().subscribe();
+          Swal.fire('Great!', 'Successfully deleted', 'success');
+        }, (err) => { 
+          Swal.fire('something goes wrong!', err.error, 'error');
+        }
+      );
   }
 }
