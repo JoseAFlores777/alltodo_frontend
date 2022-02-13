@@ -26,6 +26,7 @@ export class TodoManageComponent implements OnInit, DoCheck {
   @ViewChild('op2') op2!: ElementRef;
   @ViewChild('btnProject') btnProject!: ElementRef;
   @ViewChild('btnSchedule') btnSchedule!: ElementRef;
+  @ViewChild('TodoList') TodoList!: ElementRef;
 
   @Input() todoTypeView!: TodoTypeView;
   @Input() currentProject!: Project;
@@ -34,8 +35,10 @@ export class TodoManageComponent implements OnInit, DoCheck {
   visibilityTodoDialog: boolean = false;
   idDialogScheduleHide: boolean = true;
 
+  
+
   action!: string;
-  schedule_tmp!: Date;
+  schedule_tmp!: Date | null;
   projects!: Project[];
   todos: Todo[] = [];
   selectedProject!: Project | null;
@@ -91,29 +94,35 @@ export class TodoManageComponent implements OnInit, DoCheck {
   }
 
   hideAddTodoDialog() {
+    this.TodoList.nativeElement.style.display = 'block';
     this.visibilityTodoDialog = false;
     this.selectedProject = null;
+    this.schedule_tmp = null;
     this.todoSaveForm.reset();
   }
 
   showAddTodoDialog() {
-    this.selectedProject = null;
+    this.TodoList.nativeElement.style.display = 'none';
+    this.action = actionType_Enum.CREATE;
+    // this.selectedProject = null;
     this.visibilityTodoDialog = true;
-    this.btnSchedule.nativeElement.value = 'Schedule';
-    this.btnProject.nativeElement.value = 'Project';
-    this.btnProject.nativeElement.style.color = 'rgba(0, 0, 0, 0.6)';
+    // this.btnSchedule.nativeElement.value = 'Schedule';
+    // this.btnProject.nativeElement.value = 'Project';
+    // this.btnProject.nativeElement.style.color = 'rgba(0, 0, 0, 0.6)';
   }
 
   showEditTodoDialog(todo: Todo) {
-    
+    this.TodoList.nativeElement.style.display = 'none';
+    this.action = actionType_Enum.UPDATE;
+    this.schedule_tmp = todo.expirationDate;
     this.visibilityTodoDialog = true;
     this.todoSaveForm.controls['title'].setValue(todo.title);
     this.todoSaveForm.controls['description'].setValue( todo.description);
     this.todoSaveForm.controls['expirationDate'].setValue(todo.expirationDate);
-    this.btnSchedule.nativeElement.innerText = this.dateToStringFormat(todo.expirationDate, 'MMM d, E');
+    // this.btnSchedule.nativeElement.label = this.dateToStringFormat(todo.expirationDate, 'MMM d, E');
     this.currentTodo = todo;
     
-    if (todo.project) {
+    if (todo.project != null) {
       this.todoSaveForm.controls['projectId'].setValue( todo.project.id);
       this.selectedProject = todo.project;
     } else { 
@@ -136,7 +145,7 @@ export class TodoManageComponent implements OnInit, DoCheck {
   }
 
   getDateScheduleFormated() {
-    return this.dateToStringFormat(this.schedule_tmp, 'MMM d, E');
+    return this.dateToStringFormat(this.schedule_tmp!, 'MMM d, E');
   }
 
   manageTodo() {

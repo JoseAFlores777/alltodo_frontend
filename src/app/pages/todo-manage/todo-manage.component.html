@@ -1,25 +1,46 @@
 <p-tabView>
     <p-tabPanel header="To Do" class="tab-todo-manage">
+        
 
 
         <!-- ======= checkbox style start ======= -->
-
-        <h6 class="mb-25">{{todoTypeView.Title_forTodo}}</h6>
+<div class="row">
+    <div class="col-6">
+        <h6 class="">{{todoTypeView.Title_forTodo}}</h6>
+    </div>
+    <div class="col-6">
+        <!-- Start add Todo Button -->
+        <button *ngIf="!visibilityTodoDialog" pRipple style="border: none;" type="button"
+            class="btn btn-outline-secondary float-end" (click)="showAddTodoDialog()">
+            <i class="pi pi-plus"></i>
+        </button>
+        <!-- End add Todo Button -->
+    </div>
+</div>
 
 
 
         <!-- start checkbox -->
-        <div *ngFor="let todo of todos">
-            <div *ngIf="!todo.completed" class="card-style card-style-todo">
-                <div class="todo-check-box form-check checkbox-style checkbox-primary" style="margin: -18px;">
-                    <input class="form-check-input" type="checkbox" [checked]="todo.completed" id="{{todo.id}}" />
-                    <label class="form-check-label" for="{{todo.id}}">{{todo.title}}</label>
-                    <button pRipple style="border: none;" type="button"
-                        (click)="showEditTodoDialog(todo)"
-                        class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-pencil"></i></button>
+        <div #TodoList>
+            <div *ngFor="let todo of todos">
+                <div *ngIf="!todo.completed" class="card-style card-style-todo">
+                    <div class="todo-check-box form-check checkbox-style checkbox-primary" style="margin: -18px;">
 
-                    <button pRipple (click)="confirmDeleteTodo($event, todo.id)" style="border: none;" type="button"
-                        class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-trash"></i></button>
+                        <input class="form-check-input" appTodoCheck
+                            [color]="(todo.project != null) ? todo.project.color : '#5d657b'" 
+                            type="checkbox"
+                            [checked]="todo.completed" 
+                            id="{{todo.id}}" />
+
+                        <label class="form-check-label" for="{{todo.id}}">{{todo.title}}</label>
+
+                        <button pRipple (click)="confirmDeleteTodo($event, todo.id)" style="border: none;" type="button"
+                            class="btn btn-outline-danger float-end btn-edit-todo"><i class="pi pi-trash"></i></button>
+                            
+                        <button pRipple style="border: none;" type="button" (click)="showEditTodoDialog(todo)"
+                            class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-pencil"></i></button>
+                            
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,7 +81,7 @@
 
                         <a pButton #btnProject id="btn-choose-project" class="p-button-text p-button-plain  float-end"
                             [style.color] = " (selectedProject != null) ? selectedProject.color : 'none' "
-                            [label]="selectedProject ? selectedProject.name : 'Project'" icon="fas fa-circle"
+                            [label]="(selectedProject != null) ? selectedProject.name : 'Project'" icon="fas fa-circle"
                             (click)="op.toggle($event)"></a>
 
 
@@ -232,6 +253,37 @@
         </p-table>
     </ng-template>
 </p-overlayPanel>
+
+
+<!-- Tasks -->
+<!-- 
+<h1>Selected Project </h1>
+{{selectedProject | json}}
+
+<h1>currentProject </h1>
+{{currentProject | json}}
+
+<h1>currentTodo </h1>
+{{currentTodo | json}}
+
+<h1>visibilityTodoDialog</h1>
+{{visibilityTodoDialog | json}}
+
+<h1>idDialogScheduleHide</h1>
+{{idDialogScheduleHide | json}}
+
+<h1>action</h1>
+{{action | json}}
+
+<h1>schedule_tmp</h1>
+{{schedule_tmp | json}}
+
+<h1>projects</h1>
+{{projects | json}}
+
+<h1>todos</h1>
+{{todos | json}} -->
+
 
 
 
