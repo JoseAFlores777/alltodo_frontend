@@ -85,8 +85,8 @@
           <li *ngFor="let project of projects">
             <a routerLink="/dashboard/my-projects/{{project.id}}">
 
-                <i class="pi pi-sitemap"></i>
-
+                <i class="fas fa-circle" [style.color]="project.color" style="margin-right: 10px;"></i>
+                
               <span class="text">{{project.name}}</span>
             </a>
           </li>

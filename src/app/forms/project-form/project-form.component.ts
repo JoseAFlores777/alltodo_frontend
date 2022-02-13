@@ -43,10 +43,10 @@ export class ProjectFormComponent implements OnInit, DoCheck {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private confirmationService: ConfirmationService
-  ) {}
+  ) { }
+  
   ngDoCheck(): void {
     this.project = this.projectService.currentProject;
-
     // console.log("in service", this.project);
   }
 
