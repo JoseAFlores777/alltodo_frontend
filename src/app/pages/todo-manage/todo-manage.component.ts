@@ -9,8 +9,9 @@ import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common'
 import { element } from 'protractor';
 import { OverlayPanel } from 'primeng/overlaypanel';
-import { timeType_Enum } from '../../models/enums';
+import { timeType_Enum, actionType_Enum } from '../../models/enums';
 import { Todo } from '../../models/todo.model';
+import { TodoService } from '../../services/todo.service';
 
 
 @Component({
@@ -19,9 +20,12 @@ import { Todo } from '../../models/todo.model';
   styleUrls: ['./todo-manage.component.css'],
   providers: [ConfirmationService, MessageService, DatePipe],
 })
+  
 export class TodoManageComponent implements OnInit, DoCheck {
   @ViewChild('scheduleCalendar') scheduleCalendar!: ElementRef;
   @ViewChild('op2') op2!: ElementRef;
+  @ViewChild('btnProject') btnProject!: ElementRef;
+  @ViewChild('btnSchedule') btnSchedule!: ElementRef;
 
   @Input() todoTypeView!: TodoTypeView;
   @Input() currentProject!: Project;
@@ -30,9 +34,12 @@ export class TodoManageComponent implements OnInit, DoCheck {
   visibilityTodoDialog: boolean = false;
   idDialogScheduleHide: boolean = true;
 
+  action!: string;
   schedule_tmp!: Date;
   projects!: Project[];
-  selectedProject!: Project;
+  todos: Todo[] = [];
+  selectedProject!: Project | null;
+  currentTodo!: Todo;
 
   minDate: string | null = this.dateToStringFormat(
     new Date(),
@@ -45,20 +52,11 @@ export class TodoManageComponent implements OnInit, DoCheck {
     NEXT_WEEK: timeType_Enum.NEXT_WEEK,
   };
 
-  todoAddForm: FormGroup = this.fb.group({
-    title: ['', Validators.required],
-    description: ['', Validators.required],
-    projectId: [''],
-    expirationDate: [new Date(), Validators.required],
-  });
+ 
 
-  // ToDo Part
+  
 
-  displayEditTodo!: boolean;
-  displayEditTodo2: boolean = true;
-  todos: Todo[] = [];
-
-  todoEditForm: FormGroup = this.fb.group({
+  todoSaveForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
     projectId: [''],
@@ -69,14 +67,17 @@ export class TodoManageComponent implements OnInit, DoCheck {
     public datepipe: DatePipe,
     private fb: FormBuilder,
     private projectService: ProjectService,
+    private todoService: TodoService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
   ) {
     this.chargeProjects();
+    this.chargeTodos();
   }
 
   ngDoCheck(): void {
     this.projects = this.projectService.projects;
+    this.todos = this.todoService.todos;
   }
 
   ngOnInit(): void {}
@@ -85,14 +86,46 @@ export class TodoManageComponent implements OnInit, DoCheck {
     this.projectService.chargeProjects().subscribe();
   }
 
+  chargeTodos() { 
+    this.todoService.chargeTodos().subscribe();
+  }
+
   hideAddTodoDialog() {
     this.visibilityTodoDialog = false;
-    this.todoAddForm.reset();
+    this.selectedProject = null;
+    this.todoSaveForm.reset();
   }
 
   showAddTodoDialog() {
+    this.selectedProject = null;
     this.visibilityTodoDialog = true;
+    this.btnSchedule.nativeElement.value = 'Schedule';
+    this.btnProject.nativeElement.value = 'Project';
+    this.btnProject.nativeElement.style.color = 'rgba(0, 0, 0, 0.6)';
   }
+
+  showEditTodoDialog(todo: Todo) {
+    
+    this.visibilityTodoDialog = true;
+    this.todoSaveForm.controls['title'].setValue(todo.title);
+    this.todoSaveForm.controls['description'].setValue( todo.description);
+    this.todoSaveForm.controls['expirationDate'].setValue(todo.expirationDate);
+    this.btnSchedule.nativeElement.innerText = this.dateToStringFormat(todo.expirationDate, 'MMM d, E');
+    this.currentTodo = todo;
+    
+    if (todo.project) {
+      this.todoSaveForm.controls['projectId'].setValue( todo.project.id);
+      this.selectedProject = todo.project;
+    } else { 
+      this.selectedProject = null;
+      this.btnProject.nativeElement.style.color = 'rgba(0, 0, 0, 0.6)';
+      console.log(this.selectedProject)
+    }
+    
+    
+  }
+
+
 
   onShowScheduleDialog() {
     this.schedule_tmp = this.scheduleCalendar.nativeElement.value;
@@ -106,18 +139,39 @@ export class TodoManageComponent implements OnInit, DoCheck {
     return this.dateToStringFormat(this.schedule_tmp, 'MMM d, E');
   }
 
-  createTodo() {
-    this.todoAddForm.controls['projectId'].setValue(this.selectedProject.id);
-    this.todoAddForm.controls['expirationDate'].setValue(this.schedule_tmp);
+  manageTodo() {
 
-    console.log('title', this.todoAddForm.controls['title'].value);
-    console.log('description', this.todoAddForm.controls['description'].value);
-    console.log('projectId', this.todoAddForm.controls['projectId'].value);
-    console.log(
-      'expirationDate',
-      this.todoAddForm.controls['expirationDate'].value
-    );
+    if (this.action == actionType_Enum.CREATE) {
+      this.createTodo();
+    }
+
+    if (this.action == actionType_Enum.UPDATE) {
+      this.updateTodo(this.currentTodo.id)
+    }
+
+
   }
+  
+  
+  createTodo() {
+    this.todoSaveForm.controls['projectId'].setValue(this.selectedProject!.id);
+    this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp);
+  
+    console.log('title', this.todoSaveForm.controls['title'].value);
+    console.log('description', this.todoSaveForm.controls['description'].value);
+    console.log('projectId', this.todoSaveForm.controls['projectId'].value);
+    console.log('expirationDate',this.todoSaveForm.controls['expirationDate'].value);
+    
+  }
+  
+  updateTodo(id: string) { 
+    console.log('idUser', id);
+    console.log('title', this.todoSaveForm.controls['title'].value);
+    console.log('description', this.todoSaveForm.controls['description'].value);
+    console.log('projectId', this.todoSaveForm.controls['projectId'].value);
+    console.log('expirationDate',this.todoSaveForm.controls['expirationDate'].value);
+  }
+
 
   onRowSelect(event: any) {
     this.messageService.add({
@@ -157,18 +211,22 @@ export class TodoManageComponent implements OnInit, DoCheck {
 
   // ToDo Part
 
+ 
+  confirmDeleteTodo(event: Event, id: string) {
+    this.confirmationService.confirm({
+      target: event!.target!,
+      message: 'Are you sure that you want to proceed?',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteTodo(id);
+      },
+      reject: () => {
+        //reject action
+      },
+    });
+   }
   
-
-  editTodo(): void {}
-
-  hideEditTodoForm() { 
-    this.displayEditTodo = false;
-    this.todoEditForm.reset();
+  deleteTodo(id: string) { 
+    console.log('idUser', id);
   }
-  
-  showEditTodoForm(todo?: Todo) {
-    this.displayEditTodo = true;
-  }
-
-  confirmDeleteTodo(event: Event, id:string) {}
 }

@@ -12,10 +12,10 @@
         <div *ngFor="let todo of todos">
             <div *ngIf="!todo.completed" class="card-style card-style-todo">
                 <div class="todo-check-box form-check checkbox-style checkbox-primary" style="margin: -18px;">
-                    <input class="form-check-input" type="checkbox" [checked]="todo.completed" id="checkbox-4" />
-                    <label class="form-check-label" for="checkbox-4">{{todo.title}}</label>
+                    <input class="form-check-input" type="checkbox" [checked]="todo.completed" id="{{todo.id}}" />
+                    <label class="form-check-label" for="{{todo.id}}">{{todo.title}}</label>
                     <button pRipple style="border: none;" type="button"
-                        (click)="showEditTodoForm(todo)"
+                        (click)="showEditTodoDialog(todo)"
                         class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-pencil"></i></button>
 
                     <button pRipple (click)="confirmDeleteTodo($event, todo.id)" style="border: none;" type="button"
@@ -24,24 +24,6 @@
             </div>
         </div>
         <!-- end checkbox -->
-
-        <!-- start checkbox -->
-        <div >
-            <div  class="card-style card-style-todo">
-                <div class="todo-check-box form-check checkbox-style checkbox-primary" style="margin: -18px;">
-                    <input class="form-check-input" type="checkbox" [checked]="false" id="checkbox-4" />
-                    <label class="form-check-label" for="checkbox-4">62056fd34026880eac45096f</label>
-                    <button pRipple style="border: none;" type="button"
-                        (click)="showEditTodoForm()"
-                        class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-pencil"></i></button>
-
-                    <button pRipple (click)="confirmDeleteTodo($event, 'asdasd')" style="border: none;" type="button"
-                        class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-trash"></i></button>
-                </div>
-            </div>
-        </div>
-        <!-- end checkbox -->
-
 
 
 
@@ -55,7 +37,7 @@
 
 
         <!-- ======= Add new Todo Form ======= -->
-        <form *ngIf="visibilityTodoDialog" class="mt-3" [formGroup]="todoAddForm" (ngSubmit)="createTodo()">
+        <form *ngIf="visibilityTodoDialog" class="mt-3" [formGroup]="todoSaveForm" (ngSubmit)="manageTodo()">
             <div class="card-style ">
                 <div class="row">
                     <div class="col-12">
@@ -77,9 +59,11 @@
 
 
                         <a pButton #btnProject id="btn-choose-project" class="p-button-text p-button-plain  float-end"
-                            [style.color]=" selectedProject ? selectedProject.color : 'none' "
-                            [label]="selectedProject ? selectedProject.name : 'Project'" icon="pi pi-sitemap"
+                            [style.color] = " (selectedProject != null) ? selectedProject.color : 'none' "
+                            [label]="selectedProject ? selectedProject.name : 'Project'" icon="fas fa-circle"
                             (click)="op.toggle($event)"></a>
+
+
                         <a pButton #btnSchedule id="btn-schedule" class="p-button-text p-button-plain  float-end"
                             [label]="getDateScheduleFormated() ? getDateScheduleFormated()! : 'Schedule'"
                             icon="pi pi-calendar" (click)="op2.toggle($event)"></a>
@@ -180,18 +164,16 @@
                     </div>
                     <div class="col-3 text-center">
                         <a (click)="setTime(timeTypes.TOMORROW, op2)" style="color: #31c5f4;" class="btn btn-calendar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-sun">
-                                <circle cx="12" cy="12" r="5"></circle>
-                                <line x1="12" y1="1" x2="12" y2="3"></line>
-                                <line x1="12" y1="21" x2="12" y2="23"></line>
-                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                                <line x1="1" y1="12" x2="3" y2="12"></line>
-                                <line x1="21" y1="12" x2="23" y2="12"></line>
-                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunrise">
+                                <path d="M17 18a5 5 0 0 0-10 0"></path>
+                                <line x1="12" y1="2" x2="12" y2="9"></line>
+                                <line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line>
+                                <line x1="1" y1="18" x2="3" y2="18"></line>
+                                <line x1="21" y1="18" x2="23" y2="18"></line>
+                                <line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line>
+                                <line x1="23" y1="22" x2="1" y2="22"></line>
+                                <polyline points="8 6 12 2 16 6"></polyline>
                             </svg>
                             <br>
                             Tomorrow</a>
@@ -254,58 +236,6 @@
 
 
 
-<p-dialog header="Edit Todo" [draggable]="false" [(visible)]="displayEditTodo2" [modal]="true" [responsive]="false"
-    [baseZIndex]="10000" appendTo="body" (onHide)="hideEditTodoForm()" (onShow)="showEditTodoForm()" >
 
-
-
-    <form id="TodoFormId" [formGroup]="todoEditForm" (ngSubmit)="editTodo()">
-        <div class="row">
-            <div class="input-style-1">
-                <label>Title</label>
-                <input type="text" placeholder="Name"  formControlName='title'/>
-            </div>
-            <!-- end input -->
-            <div class="input-style-1">
-                <label>Description</label>
-                <textarea placeholder="Description" rows="5" formControlName="description"></textarea>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-style-1 col-6">
-                <label>Date</label>
-                <input type="text" placeholder="Name"  formControlName='projectId'/>
-            </div>
-            <!-- end input -->
-            <div class="select-style-1 col-6">
-                <label>Project</label>
-                <div class="select-position">
-                  <select class="light-bg"  formControlName="gender" >
-                    <option value="Female">Female</option>
-                    <option value="Male">Male</option>
-                  </select>
-                </div>
-              </div>
-        </div>
-        <!-- end input -->
-
-
-        
-        
-            
-            <p-footer>
-                <button pRipple type="submit" icon="pi pi-info-circle" class="btn btn-outline-primary mt-3 float-end">
-                    <!-- [disabled]="nameForm.invalid || !nameForm.touched"> -->
-                    Update
-                </button>
-            </p-footer>
-        
-
-    </form>
-    <p-toast></p-toast>
-
-    <p-confirmPopup [baseZIndex]="30000"></p-confirmPopup>
-
-</p-dialog>
 
 
