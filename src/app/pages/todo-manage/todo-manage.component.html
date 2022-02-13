@@ -31,6 +31,7 @@
                             [color]="(todo.project != null) ? todo.project.color : '#5d657b'" 
                             type="checkbox"
                             [checked]="todo.completed" 
+                            (change)="updateTodoStatus(todo, $event)"
                             id="{{todo.id}}" />
 
                         <label class="form-check-label" for="{{todo.id}}">
@@ -129,15 +130,33 @@
 
 
         <!-- start checkbox -->
-        <div *ngFor="let todo of todos">
-            <div *ngIf="todo.completed" class="card-style card-style-todo">
-                <div class="todo-check-box form-check checkbox-style checkbox-primary" style="margin: -18px;">
-                    <input class="form-check-input" type="checkbox" [checked]="todo.completed" id="checkbox-4" />
-                    <label class="form-check-label" for="checkbox-4">{{todo.title}}</label>
-                    <button pRipple style="border: none;" type="button"
-                        class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-pencil"></i></button>
-                    <button pRipple (click)="confirmDeleteTodo($event, todo.id)" style="border: none;" type="button"
-                        class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-trash"></i></button>
+        <div #TodoList>
+            <div *ngFor="let todo of todos">
+                <div *ngIf="todo.completed" class="card-style card-style-todo">
+                    <div class="todo-check-box form-check checkbox-style checkbox-primary" style="margin: -18px;">
+
+                        <input class="form-check-input" appTodoCheck
+                            #todoCheck
+                            [color]="(todo.project != null) ? todo.project.color : '#5d657b'" 
+                            [style.borderColor]="(todo.project != null) ? todo.project.color : '#5d657b'" 
+                            [style.backgroundColor]="(todo.project != null) ? todo.project.color : '#5d657b'" 
+                            type="checkbox"
+                            
+                            [checked]="todo.completed" 
+                            (change)="updateTodoStatus(todo, $event)"
+                            id="{{todo.id}}" />
+
+                        <label class="form-check-label" for="{{todo.id}}">
+                            <div class="text-decoration-line-through">{{todo.title}}</div>
+                        </label>
+
+                        <!-- <a pRipple (click)="confirmDeleteTodo($event, todo.id)" style="border: none;" type="button"
+                            class="btn btn-outline-danger float-end btn-edit-todo"><i class="pi pi-trash"></i></a>
+                            
+                        <button pRipple style="border: none;" type="button" (click)="showEditTodoDialog(todo)"
+                            class="btn btn-outline-secondary float-end btn-edit-todo"><i class="pi pi-pencil"></i></button> -->
+                            
+                    </div>
                 </div>
             </div>
         </div>

@@ -287,4 +287,29 @@ export class TodoManageComponent implements OnInit, DoCheck {
         }
       );
   }
+
+  updateTodoStatus(todo:Todo, event:any) {
+    console.log(todo.title, event.target!.checked);
+    console.log(event.path[2])
+
+    
+    // setTimeout(function(){
+    //   event.path[2].style.display = 'none';
+    // },500);
+
+
+    let StatusData = {
+      "completed": event.target!.checked
+    }
+
+    this.todoService.updateTodoStatus(todo.id, StatusData)
+      .subscribe(
+        (response) => { 
+          this.todoService.chargeTodos().subscribe();
+        }, (err) => { 
+          Swal.fire('something goes wrong!', err.error, 'error');
+        }
+      );
+  }
+
 }

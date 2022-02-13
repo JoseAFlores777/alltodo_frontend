@@ -42,6 +42,12 @@ export class TodoService {
     return this.http.delete(`${base_url}/todos/${id}`, this.authService.headers);
   }
 
+  updateTodoStatus(id: string, formData: any) {
+    
+    return this.http.put(`${base_url}/status/todo/${id}`, formData, this.authService.headers);
+  }
+
+
 
 
 }
