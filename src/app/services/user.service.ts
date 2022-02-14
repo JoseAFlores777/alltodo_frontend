@@ -25,4 +25,24 @@ export class UserService {
     return this.http.put(`${base_url}/users/${id}`, formData, this.authService.headers);
 
   }
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
