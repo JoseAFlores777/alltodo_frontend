@@ -10,6 +10,7 @@ import { UpcomingComponent } from './upcoming/upcoming.component';
 import { MyProjectsComponent } from './my-projects/my-projects.component';
 import { TodoManageComponent } from './todo-manage/todo-manage.component';
 import { TomorrowComponent } from './tomorrow/tomorrow.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 const childRoutes: Routes = [
@@ -20,6 +21,7 @@ const childRoutes: Routes = [
   {path: 'tomorrow', component: TomorrowComponent, data: { title: 'Tomorrow' }},
   {path: 'upcoming', component: UpcomingComponent, data: { title: 'Upcoming' }},
   {path: 'my-projects/:id', component: MyProjectsComponent, data: { title: 'My Projects' }},
+  {path: 'reports', component: ReportsComponent, data: { title: 'Reports' }},
   
 ]
 

@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '../forms/forms.module';
 import { DirectivesModule } from '../directives/directives.module';
 import { TomorrowComponent } from './tomorrow/tomorrow.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 
@@ -35,6 +36,7 @@ import { TomorrowComponent } from './tomorrow/tomorrow.component';
     TomorrowComponent,
     UpcomingComponent,
     TodoManageComponent,
+    ReportsComponent
     
     
     
@@ -47,7 +49,8 @@ import { TomorrowComponent } from './tomorrow/tomorrow.component';
     MyProjectsComponent,
     TodayComponent,
     TomorrowComponent,
-    UpcomingComponent
+    UpcomingComponent,
+    ReportsComponent
   ],
   imports: [
     CommonModule,
