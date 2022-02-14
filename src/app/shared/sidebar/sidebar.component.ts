@@ -19,7 +19,7 @@ export class SidebarComponent implements OnInit, DoCheck {
   constructor(private projectService: ProjectService) {
 
 
-    this.chargeProjects();
+    // this.chargeProjects();
    }
 
 

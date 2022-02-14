@@ -16,6 +16,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '../forms/forms.module';
 import { DirectivesModule } from '../directives/directives.module';
+import { TomorrowComponent } from './tomorrow/tomorrow.component';
 
 
 
@@ -31,8 +32,10 @@ import { DirectivesModule } from '../directives/directives.module';
     InboxComponent,
     MyProjectsComponent,
     TodayComponent,
+    TomorrowComponent,
     UpcomingComponent,
-    TodoManageComponent
+    TodoManageComponent,
+    
     
     
   ],
@@ -43,6 +46,7 @@ import { DirectivesModule } from '../directives/directives.module';
     InboxComponent,
     MyProjectsComponent,
     TodayComponent,
+    TomorrowComponent,
     UpcomingComponent
   ],
   imports: [

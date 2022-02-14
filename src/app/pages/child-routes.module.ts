@@ -9,6 +9,7 @@ import { TodayComponent } from './today/today.component';
 import { UpcomingComponent } from './upcoming/upcoming.component';
 import { MyProjectsComponent } from './my-projects/my-projects.component';
 import { TodoManageComponent } from './todo-manage/todo-manage.component';
+import { TomorrowComponent } from './tomorrow/tomorrow.component';
 
 
 const childRoutes: Routes = [
@@ -16,6 +17,7 @@ const childRoutes: Routes = [
   {path: 'profile', component: ProfileComponent, data: { title: 'My Profile' }},
   {path: 'inbox', component: InboxComponent, data: { title: 'Inbox' }},
   {path: 'today', component: TodayComponent, data: { title: 'Today' }},
+  {path: 'tomorrow', component: TomorrowComponent, data: { title: 'Tomorrow' }},
   {path: 'upcoming', component: UpcomingComponent, data: { title: 'Upcoming' }},
   {path: 'my-projects/:id', component: MyProjectsComponent, data: { title: 'My Projects' }},
   

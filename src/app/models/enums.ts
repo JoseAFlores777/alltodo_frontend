@@ -2,6 +2,7 @@ export const TypeView_Enum = Object.freeze(
     {
         INBOX : 'INBOX',
         TODAY : 'TODAY',
+        TOMORROW : 'TOMORROW',
         UPCOMING : 'UPCOMING',
         PROJECTS : 'PROJECTS',
     })

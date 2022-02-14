@@ -116,17 +116,23 @@ export class TodoManageComponent implements OnInit, DoCheck {
     if (this.todoTypeView.TypeView == TypeView_Enum.TODAY) {
       this.schedule_tmp = new Date(); 
     }
+    if (this.todoTypeView.TypeView == TypeView_Enum.TOMORROW) {
+      let today = new Date();
+      let date2 = new Date(today);
+      date2.setDate(date2.getDate() + 1);
+      this.schedule_tmp = date2;
+    }
 
   }
 
   showEditTodoDialog(todo: Todo) {
     this.TodoList.nativeElement.style.display = 'none';
     this.action = actionType_Enum.UPDATE;
-    this.schedule_tmp = todo.expirationDate;
+    this.schedule_tmp = new Date(todo.expirationDate);
     this.visibilityTodoDialog = true;
     this.todoSaveForm.controls['title'].setValue(todo.title);
     this.todoSaveForm.controls['description'].setValue(todo.description);
-    this.todoSaveForm.controls['expirationDate'].setValue(todo.expirationDate);
+    this.todoSaveForm.controls['expirationDate'].setValue( this.schedule_tmp.toISOString());
     // this.btnSchedule.nativeElement.label = this.dateToStringFormat(todo.expirationDate, 'MMM d, E');
     this.currentTodo = todo;
 
@@ -149,7 +155,7 @@ export class TodoManageComponent implements OnInit, DoCheck {
   }
 
   getDateScheduleFormated() {
-    return this.dateToStringFormat(this.schedule_tmp!, 'MMM d, E');
+    return this.dateToStringFormat(this.schedule_tmp!, 'MMM dd, E');
   }
 
   manageTodo() {
@@ -174,7 +180,7 @@ export class TodoManageComponent implements OnInit, DoCheck {
       this.todoSaveForm.controls['project'].setValue(this.selectedProject);
     }
     if (this.schedule_tmp != null) {
-      this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp);
+      this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp.toISOString());
     }
 
     this.todoSaveForm.controls['completed'].setValue(false);
@@ -314,7 +320,7 @@ export class TodoManageComponent implements OnInit, DoCheck {
 
 
   todoDataFilterController(todos: Todo[]): any {
-
+    let today = new Date();
     switch (this.todoTypeView.TypeView) {
 
       case TypeView_Enum.INBOX:
@@ -323,15 +329,28 @@ export class TodoManageComponent implements OnInit, DoCheck {
       
       
       case TypeView_Enum.TODAY:
-        let today = new Date();
+        
         this.todos = todos.filter((todo) => {
           let date = new Date(todo.expirationDate);
           return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear();
         });
         break;
       
+      case TypeView_Enum.TOMORROW:
+        this.todos = todos.filter((todo) => {
+          let date = new Date(todo.expirationDate);
+          return date.getDate() == today.getDate()+1 && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear();
+        });
+        break;
+      
       
       case TypeView_Enum.UPCOMING:
+        this.todos = todos.filter((todo) => {
+          let date = new Date(todo.expirationDate);
+          let tomorrow = new Date(today);
+          tomorrow.setDate(tomorrow.getDate() + 1)
+          return date > today && date > tomorrow;
+        });
         break;
       
       
