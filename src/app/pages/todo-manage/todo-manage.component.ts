@@ -132,7 +132,7 @@ export class TodoManageComponent implements OnInit, DoCheck {
     this.visibilityTodoDialog = true;
     this.todoSaveForm.controls['title'].setValue(todo.title);
     this.todoSaveForm.controls['description'].setValue(todo.description);
-    this.todoSaveForm.controls['expirationDate'].setValue( this.schedule_tmp.toISOString());
+    this.todoSaveForm.controls['expirationDate'].setValue( this.schedule_tmp);
     // this.btnSchedule.nativeElement.label = this.dateToStringFormat(todo.expirationDate, 'MMM d, E');
     this.currentTodo = todo;
 
@@ -180,7 +180,7 @@ export class TodoManageComponent implements OnInit, DoCheck {
       this.todoSaveForm.controls['project'].setValue(this.selectedProject);
     }
     if (this.schedule_tmp != null) {
-      this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp.toISOString());
+      this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp);
     }
 
     this.todoSaveForm.controls['completed'].setValue(false);

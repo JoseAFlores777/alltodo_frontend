@@ -66,4 +66,40 @@ export class DashboardComponent implements OnInit {
     return this.todoService.todos.filter(todo => !todo.completed).length;
   }
 
+  getTotalTodosByProject(id: string) { 
+    
+    let todos_tmp = this.todoService.todos.filter((todo) => {
+      return todo.project != null;
+    });
+
+    todos_tmp = todos_tmp.filter((todo) => {
+      return todo.project.id == id;
+    });
+    return todos_tmp.length;
+  }
+
+  getTotalTodosCompletedByProject(id: string) { 
+    
+    let todos_tmp = this.todoService.todos.filter((todo) => {
+      return todo.project != null;
+    });
+
+    todos_tmp = todos_tmp.filter((todo) => {
+      return todo.project.id == id && todo.completed;
+    });
+    return todos_tmp.length;
+  }
+
+  getTotalTodosPendingByProject(id: string) { 
+    
+    let todos_tmp = this.todoService.todos.filter((todo) => {
+      return todo.project != null;
+    });
+
+    todos_tmp = todos_tmp.filter((todo) => {
+      return todo.project.id == id && !todo.completed;
+    });
+    return todos_tmp.length;
+  }
+
 }
