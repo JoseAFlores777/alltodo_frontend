@@ -8,6 +8,10 @@
             <div class="input-style-1 col-6 col-md-8 col-lg-9">
                 <label>Project Name</label>
                 <input type="text" placeholder="Name"   formControlName='name'/>
+                <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+                *ngIf="isValidInput('name')">
+                    The last name is required
+                </span>
             </div>
             <!-- end input -->
             <div class="input-style-2 col-6 col-md-4 col-lg-3">
@@ -19,6 +23,10 @@
         <div class="input-style-1">
             <label>Description</label>
             <textarea placeholder="Description" rows="5" formControlName="description"></textarea>
+            <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+            *ngIf="isValidInput('description')">
+                The last name is required
+            </span>
         </div>
 
         

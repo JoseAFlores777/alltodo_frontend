@@ -22,7 +22,7 @@ export class TodayComponent implements OnInit {
 
   value1: number = 1
   
-  todoTypeView: TodoTypeView = new TodoTypeView(TypeView_Enum.PROJECTS,"For Today","Completed");
+  todoTypeView: TodoTypeView = new TodoTypeView(TypeView_Enum.TODAY,"For Today","Completed");
   
 
   constructor( private messageService: MessageService, private confirmationService: ConfirmationService) { }

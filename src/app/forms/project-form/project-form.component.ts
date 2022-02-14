@@ -33,7 +33,7 @@ export class ProjectFormComponent implements OnInit, DoCheck {
 
   projectForm: FormGroup = this.fb.group({
     name: ['', Validators.required],
-    description: [''],
+    description: ['', Validators.required],
     color: ['#6c6eb3'],
   });
 
@@ -50,7 +50,15 @@ export class ProjectFormComponent implements OnInit, DoCheck {
     // console.log("in service", this.project);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+  
+
+  isValidInput(inputName: string) {
+    return (
+      this.projectForm.controls[inputName].errors &&
+      this.projectForm.controls[inputName].touched
+    );
+  }
 
   hideForm() {
     this.isHide.emit(false);
@@ -106,6 +114,10 @@ export class ProjectFormComponent implements OnInit, DoCheck {
   }
 
   createProject() {
+    if (this.projectForm.invalid) {
+      this.projectForm.markAllAsTouched();
+      return;
+    }
     this.projectService.createProject(this.projectForm.value).subscribe(
       (res: any) => {
         this.hideForm();

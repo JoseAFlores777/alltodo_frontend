@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common'
 import { element } from 'protractor';
 import { OverlayPanel } from 'primeng/overlaypanel';
-import { timeType_Enum, actionType_Enum } from '../../models/enums';
+import { timeType_Enum, actionType_Enum, TypeView_Enum } from '../../models/enums';
 import { Todo } from '../../models/todo.model';
 import { TodoService } from '../../services/todo.service';
 import { title } from 'process';
@@ -21,7 +21,6 @@ import { title } from 'process';
   styleUrls: ['./todo-manage.component.css'],
   providers: [ConfirmationService, MessageService, DatePipe],
 })
-  
 export class TodoManageComponent implements OnInit, DoCheck {
   @ViewChild('scheduleCalendar') scheduleCalendar!: ElementRef;
   @ViewChild('op2') op2!: ElementRef;
@@ -35,8 +34,6 @@ export class TodoManageComponent implements OnInit, DoCheck {
 
   visibilityTodoDialog: boolean = false;
   idDialogScheduleHide: boolean = true;
-
-  
 
   action!: string;
   schedule_tmp!: Date | null;
@@ -56,14 +53,11 @@ export class TodoManageComponent implements OnInit, DoCheck {
     NEXT_WEEK: timeType_Enum.NEXT_WEEK,
   };
 
- 
-
-  
-
   todoSaveForm: FormGroup = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
     project: [null],
+    completed: [false],
     expirationDate: [new Date(), Validators.required],
   });
 
@@ -81,7 +75,8 @@ export class TodoManageComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     this.projects = this.projectService.projects;
-    this.todos = this.todoService.todos;
+    //this.todos = this.todoService.todos;
+    this.todoDataFilterController(this.todoService.todos);
   }
 
   ngOnInit(): void {}
@@ -90,8 +85,16 @@ export class TodoManageComponent implements OnInit, DoCheck {
     this.projectService.chargeProjects().subscribe();
   }
 
-  chargeTodos() { 
+  chargeTodos() {
     this.todoService.chargeTodos().subscribe();
+  }
+
+
+  isValidInput(inputName: string) {
+    return (
+      this.todoSaveForm.controls[inputName].errors &&
+      this.todoSaveForm.controls[inputName].touched
+    );
   }
 
   hideAddTodoDialog() {
@@ -105,11 +108,15 @@ export class TodoManageComponent implements OnInit, DoCheck {
   showAddTodoDialog() {
     this.TodoList.nativeElement.style.display = 'none';
     this.action = actionType_Enum.CREATE;
-    // this.selectedProject = null;
     this.visibilityTodoDialog = true;
-    // this.btnSchedule.nativeElement.value = 'Schedule';
-    // this.btnProject.nativeElement.value = 'Project';
-    // this.btnProject.nativeElement.style.color = 'rgba(0, 0, 0, 0.6)';
+
+    if (this.todoTypeView.TypeView == TypeView_Enum.PROJECTS) {
+      this.selectedProject = this.currentProject;
+    }
+    if (this.todoTypeView.TypeView == TypeView_Enum.TODAY) {
+      this.schedule_tmp = new Date(); 
+    }
+
   }
 
   showEditTodoDialog(todo: Todo) {
@@ -118,24 +125,20 @@ export class TodoManageComponent implements OnInit, DoCheck {
     this.schedule_tmp = todo.expirationDate;
     this.visibilityTodoDialog = true;
     this.todoSaveForm.controls['title'].setValue(todo.title);
-    this.todoSaveForm.controls['description'].setValue( todo.description);
+    this.todoSaveForm.controls['description'].setValue(todo.description);
     this.todoSaveForm.controls['expirationDate'].setValue(todo.expirationDate);
     // this.btnSchedule.nativeElement.label = this.dateToStringFormat(todo.expirationDate, 'MMM d, E');
     this.currentTodo = todo;
-    
+
     if (todo.project != null) {
-      this.todoSaveForm.controls['project'].setValue( todo.project.id);
+      this.todoSaveForm.controls['project'].setValue(todo.project.id);
       this.selectedProject = todo.project;
-    } else { 
+    } else {
       this.selectedProject = null;
       this.btnProject.nativeElement.style.color = 'rgba(0, 0, 0, 0.6)';
-      console.log(this.selectedProject)
+      // console.log(this.selectedProject);
     }
-    
-    
   }
-
-
 
   onShowScheduleDialog() {
     this.schedule_tmp = this.scheduleCalendar.nativeElement.value;
@@ -150,78 +153,71 @@ export class TodoManageComponent implements OnInit, DoCheck {
   }
 
   manageTodo() {
-
     if (this.action == actionType_Enum.CREATE) {
       this.createTodo();
     }
 
     if (this.action == actionType_Enum.UPDATE) {
-      this.updateTodo(this.currentTodo.id)
+      this.updateTodo(this.currentTodo.id);
     }
-
-
   }
-  
-  
+
   createTodo() {
-    if (this.selectedProject != null) {
-      this.todoSaveForm.controls['project'].setValue(this.selectedProject);
-      // console.log('project', this.todoSaveForm.controls['project'].value);
-    }
-    if (this.schedule_tmp != null) {
-      this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp);
-      // console.log('expirationDate',this.todoSaveForm.controls['expirationDate'].value);
-    }
-  
-  
-    // console.log('title', this.todoSaveForm.controls['title'].value);
-    // console.log('description', this.todoSaveForm.controls['description'].value);
 
-    // console.log(this.todoSaveForm.value);
-    
-    this.todoService.createTodo(this.todoSaveForm.value)
-      .subscribe(
-        (response) => { 
-          this.todoService.chargeTodos().subscribe();
-          Swal.fire('Great!', 'Successfully created', 'success');
-          this.hideAddTodoDialog();
-        }, (err) => { 
-          Swal.fire('something goes wrong!', err.error, 'error');
-        }
-      );
-
-  }
-  
-  updateTodo(id: string) { 
     if (this.todoSaveForm.invalid) {
       this.todoSaveForm.markAllAsTouched();
       return;
     }
+
+
     if (this.selectedProject != null) {
       this.todoSaveForm.controls['project'].setValue(this.selectedProject);
-
     }
     if (this.schedule_tmp != null) {
       this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp);
-
     }
-  
-    // console.log(this.todoSaveForm.value);
-    
-    this.todoService.updateTodo(id, this.todoSaveForm.value)
-      .subscribe(
-        (response) => { 
-          this.hideAddTodoDialog();
-          this.todoService.chargeTodos().subscribe();
-          Swal.fire('Great!', 'Successfully updated', 'success');
-        }, (err) => { 
-          Swal.fire('something goes wrong!', err.error, 'error');
-        }
-      );
-    
 
+    this.todoSaveForm.controls['completed'].setValue(false);
+
+    this.todoService.createTodo(this.todoSaveForm.value).subscribe(
+      (response) => {
+        this.todoService.chargeTodos().subscribe();
+        Swal.fire('Great!', 'Successfully created', 'success');
+        this.hideAddTodoDialog();
+      },
+      (err) => {
+        Swal.fire('something goes wrong!', err.error, 'error');
+      }
+    );
   }
 
+  updateTodo(id: string) {
+
+    if (this.todoSaveForm.invalid) {
+      this.todoSaveForm.markAllAsTouched();
+      return;
+    }
+
+    if (this.selectedProject != null) {
+      this.todoSaveForm.controls['project'].setValue(this.selectedProject);
+    }
+    if (this.schedule_tmp != null) {
+      this.todoSaveForm.controls['expirationDate'].setValue(this.schedule_tmp);
+    }
+
+    // console.log(this.todoSaveForm.value);
+
+    this.todoService.updateTodo(id, this.todoSaveForm.value).subscribe(
+      (response) => {
+        this.hideAddTodoDialog();
+        this.todoService.chargeTodos().subscribe();
+        Swal.fire('Great!', 'Successfully updated', 'success');
+      },
+      (err) => {
+        Swal.fire('something goes wrong!', err.error, 'error');
+      }
+    );
+  }
 
   onRowSelect(event: any) {
     this.messageService.add({
@@ -231,11 +227,18 @@ export class TodoManageComponent implements OnInit, DoCheck {
     });
   }
 
-  setTime(time: string, element: OverlayPanel) {
+  setTimeByButtons(time: string, element: OverlayPanel) {
+    this.printTimeInForm(time);
+    element.hide();
+  }
+
+
+
+  printTimeInForm(time: string) {
     let today = new Date();
     let date2 = new Date(today);
 
-    if (time == timeType_Enum.TODAY) {
+    if (time == timeType_Enum.TODAY || time == TypeView_Enum.TODAY) {
       this.scheduleCalendar.nativeElement.value = this.dateToStringFormat(
         today,
         'yyyy-MM-ddThh:mm'
@@ -248,20 +251,17 @@ export class TodoManageComponent implements OnInit, DoCheck {
         'yyyy-MM-ddThh:mm'
       );
     }
-    if (time == timeType_Enum.NEXT_WEEK) {
+    if (time == timeType_Enum.NEXT_WEEK || time == TypeView_Enum.UPCOMING) {
       date2.setDate(date2.getDate() + 7);
       this.scheduleCalendar.nativeElement.value = this.dateToStringFormat(
         date2,
         'yyyy-MM-ddThh:mm'
       );
     }
-
-    element.hide();
   }
 
   // ToDo Part
 
- 
   confirmDeleteTodo(event: Event, id: string) {
     this.confirmationService.confirm({
       target: event!.target!,
@@ -274,42 +274,86 @@ export class TodoManageComponent implements OnInit, DoCheck {
         //reject action
       },
     });
-   }
-  
-  deleteTodo(id: string) { 
-    this.todoService.deleteTodo(id)
-      .subscribe(
-        (response) => { 
-          this.todoService.chargeTodos().subscribe();
-          Swal.fire('Great!', 'Successfully deleted', 'success');
-        }, (err) => { 
-          Swal.fire('something goes wrong!', err.error, 'error');
-        }
-      );
   }
 
-  updateTodoStatus(todo:Todo, event:any) {
-    console.log(todo.title, event.target!.checked);
-    console.log(event.path[2])
+  deleteTodo(id: string) {
+    this.todoService.deleteTodo(id).subscribe(
+      (response) => {
+        this.todoService.chargeTodos().subscribe();
+        Swal.fire('Great!', 'Successfully deleted', 'success');
+      },
+      (err) => {
+        Swal.fire('something goes wrong!', err.error, 'error');
+      }
+    );
+  }
 
-    
+  updateTodoStatus(todo: Todo, event: any) {
+    // console.log(todo.title, event.target!.checked);
+    // console.log(event.path[2]);
+
     // setTimeout(function(){
     //   event.path[2].style.display = 'none';
     // },500);
 
-
     let StatusData = {
-      "completed": event.target!.checked
-    }
+      completed: event.target!.checked,
+    };
 
-    this.todoService.updateTodoStatus(todo.id, StatusData)
-      .subscribe(
-        (response) => { 
-          this.todoService.chargeTodos().subscribe();
-        }, (err) => { 
-          Swal.fire('something goes wrong!', err.error, 'error');
-        }
-      );
+    this.todoService.updateTodoStatus(todo.id, StatusData).subscribe(
+      (response) => {
+        this.todoService.chargeTodos().subscribe();
+      },
+      (err) => {
+        Swal.fire('something goes wrong!', err.error, 'error');
+      }
+    );
   }
+
+
+
+
+  todoDataFilterController(todos: Todo[]): any {
+
+    switch (this.todoTypeView.TypeView) {
+
+      case TypeView_Enum.INBOX:
+        this.todos = todos;
+        break;
+      
+      
+      case TypeView_Enum.TODAY:
+        let today = new Date();
+        this.todos = todos.filter((todo) => {
+          let date = new Date(todo.expirationDate);
+          return date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear();
+        });
+        break;
+      
+      
+      case TypeView_Enum.UPCOMING:
+        break;
+      
+      
+      case TypeView_Enum.PROJECTS:
+
+        let todos_tmp = todos.filter((todo) => {
+          return todo.project != null;
+        });
+
+        this.todos = todos_tmp.filter((todo) => {
+          return todo.project.id == this.currentProject.id;
+        });
+
+        break;
+    }
+  }
+
+
+
+
+
+
+
 
 }

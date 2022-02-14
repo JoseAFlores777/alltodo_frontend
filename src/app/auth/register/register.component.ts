@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit {
   get passErrorsMsj(): string {
     const errors = this.registerForm.get('password')?.errors;
 
-    console.log(this.registerForm.get('password')?.errors?.minlength);
+    // console.log(this.registerForm.get('password')?.errors?.minlength);
     if (errors?.required) {
       return 'The password is required';
     } else if (errors?.strong) {

@@ -17,9 +17,9 @@ export class AuthGuard implements CanActivate, CanLoad {
       .pipe(
         tap(isAuthenticated => {
           
-          console.log(isAuthenticated);
+          // console.log(isAuthenticated);
           if (!isAuthenticated) {
-            console.log('canLoad');
+            // console.log('canLoad');
             this.router.navigateByUrl('/auth')
           }
         })
@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate, CanLoad {
       .pipe(
         tap(isAuthenticated => {
           if (!isAuthenticated) {
-            console.log('canActivate');
+            // console.log('canActivate');
             this.router.navigateByUrl('/auth')
           }
         })

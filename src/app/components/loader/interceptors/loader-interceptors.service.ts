@@ -19,7 +19,7 @@ export class LoaderInterceptorService implements HttpInterceptor {
       .pipe(
         finalize(
           () => {
-            console.log(req)
+            // console.log(req)
             this.loaderService.isLoading.next(false);
           }
         )

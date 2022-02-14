@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { ValidatorService } from '../../shared/validators/validator.service';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
+import { TodoService } from '../../services/todo.service';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-login',
@@ -49,6 +51,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
+    private todoService: TodoService,
+    private projectService: ProjectService,
     private ngZone: NgZone,
     private render: Renderer2,
     private customValidators: ValidatorService
@@ -69,7 +73,7 @@ export class LoginComponent implements OnInit {
 
   resetAttemps() {
     this.failedAttempts = 0;
-    console.log(this.failedAttempts);
+    // console.log(this.failedAttempts);
   }
 
   isValidInput(inputName: string) {
@@ -89,6 +93,11 @@ export class LoginComponent implements OnInit {
     return '';
   }
 
+  chargeData() {
+    this.projectService.chargeProjects().subscribe();
+    this.todoService.chargeTodos().subscribe();
+  }
+
 
   login() {
     if (this.loginForm.invalid) {
@@ -101,6 +110,7 @@ export class LoginComponent implements OnInit {
         if (!resp.user.verifiedEmail) {
           this.sendVerificationEmail(this.loginForm.get('email')?.value,resp.user.Id);
         } else {
+          this.chargeData();
           this.router.navigateByUrl('/');
         }
       },
@@ -162,11 +172,12 @@ export class LoginComponent implements OnInit {
       this.authService.isEmailVerified(email).subscribe((EmailVerified) => {
         if (EmailVerified) {
           Swal.fire('Great!', 'Your Email is verified', 'success');
-          console.log('is verified');
+          // console.log('is verified');
+          this.chargeData();
           this.router.navigateByUrl('/');
         } else {
           Swal.fire("Your Email isn't verified", 'Access denied', 'warning');
-          console.log('is verified');
+          // console.log('is verified');
           this.router.navigateByUrl('/auth');
           localStorage.removeItem('Authorization');
         }
@@ -175,7 +186,7 @@ export class LoginComponent implements OnInit {
   }
 
   forgotPasswordModal(email?: string) {
-    console.log("first");
+    // console.log("first");
     Swal.fire({
       title: '¿Olvidaste tu Contraseña?',
       input: 'email',

@@ -69,10 +69,18 @@
 
                         <input placeholder="Title" style="width: 100%; border: none; color: #1a1a1a; font-weight: bold;"
                             formControlName="title">
+                            <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+                            *ngIf="isValidInput('title')">
+                                The title is required
+                            </span>
                     </div>
                     <div class="col-12 mt-3">
                         <textarea formControlName="description" style="width: 100%; border: none; color: #575757;"
                             placeholder="Description" name="" id="" cols="10" rows="5"></textarea>
+                            <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+                            *ngIf="isValidInput('description')">
+                                The description is required
+                            </span>
                     </div>
 
                 </div>
@@ -92,9 +100,12 @@
                         <a pButton #btnSchedule id="btn-schedule" class="p-button-text p-button-plain  float-end"
                             [label]="getDateScheduleFormated() ? getDateScheduleFormated()! : 'Schedule'"
                             icon="pi pi-calendar" (click)="op2.toggle($event)"></a>
-
-
-                    </div>
+                            
+                        </div>
+                        <span class="form-text text-danger" style="margin-bottom: 13px; text-align: end !important;"
+                        *ngIf="isValidInput('expirationDate')">
+                            The Date is required
+                        </span>
                 </div>
             </div>
             <div style="margin-top: 10px; margin-left: 10px;">
@@ -189,7 +200,7 @@
             <div class="card-body" style="padding: 2px;">
                 <div class="row  justify-content-center">
                     <div class="col-3 text-center">
-                        <a (click)="setTime(timeTypes.TODAY, op2)" style="color: #6c6eb3;"
+                        <a (click)="setTimeByButtons(timeTypes.TODAY, op2)" style="color: #6c6eb3;"
                             class="btn btn-calendar p-button-plain">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -208,7 +219,7 @@
                             Today</a>
                     </div>
                     <div class="col-3 text-center">
-                        <a (click)="setTime(timeTypes.TOMORROW, op2)" style="color: #31c5f4;" class="btn btn-calendar">
+                        <a (click)="setTimeByButtons(timeTypes.TOMORROW, op2)" style="color: #31c5f4;" class="btn btn-calendar">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sunrise">
                                 <path d="M17 18a5 5 0 0 0-10 0"></path>
@@ -224,7 +235,7 @@
                             Tomorrow</a>
                     </div>
                     <div class="col-6 text-center">
-                        <a (click)="setTime(timeTypes.NEXT_WEEK, op2)" style="color: #f071ab;" class="btn btn-calendar">
+                        <a (click)="setTimeByButtons(timeTypes.NEXT_WEEK, op2)" style="color: #f071ab;" class="btn btn-calendar">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="feather feather-calendar">
@@ -281,17 +292,21 @@
 
 <!-- Tasks -->
 
+<!-- <h1>todoTypeView </h1>
+{{todoTypeView| json}} -->
+
+
 <!-- <h1>todoSaveForm </h1>
 {{todoSaveForm.value| json}} -->
 
 <!-- <h1>Selected Project </h1>
-{{selectedProject | json}}
+{{selectedProject | json}} -->
 
-<h1>currentProject </h1>
+<!-- <h1>currentProject </h1>
 {{currentProject | json}} -->
 
-<h1>currentTodo </h1>
-{{currentTodo | json}}
+<!-- <h1>currentTodo </h1>
+{{currentTodo | json}} -->
 
 <!-- <h1>visibilityTodoDialog</h1>
 {{visibilityTodoDialog | json}} -->
@@ -302,14 +317,14 @@
 <!-- <h1>action</h1>
 {{action | json}} -->
 
-<h1>schedule_tmp</h1>
-{{schedule_tmp | json}}
+<!-- <h1>schedule_tmp</h1>
+{{schedule_tmp | json}} -->
 
 <!-- <h1>projects</h1>
 {{projects | json}} -->
 
-<h1>todos</h1>
-{{todos | json}} 
+<!-- <h1>todos</h1>
+{{todos | json}}  -->
 
 
 

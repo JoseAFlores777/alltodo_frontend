@@ -9,7 +9,7 @@ import { TypeView_Enum } from '../../models/enums';
 })
 export class UpcomingComponent implements OnInit {
 
-  todoTypeView: TodoTypeView = new TodoTypeView(TypeView_Enum.PROJECTS,"What's next?","Advance Work");
+  todoTypeView: TodoTypeView = new TodoTypeView(TypeView_Enum.UPCOMING,"What's next?","Advance Work");
   
   
   products!: String[];
@@ -22,7 +22,7 @@ export class UpcomingComponent implements OnInit {
   }
 
   onRowSelect(event:any) {
-    console.log("first");
+    // console.log("first");
 }
 
 }

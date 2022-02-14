@@ -23,7 +23,7 @@ validate(control: AbstractControl): Promise<ValidationErrors | null> | Observabl
   return this.http.get<any>(`${base_url}/auth/users/find/${email}`)
     .pipe(
       map(resp => {
-        return (resp.ok === false)
+        return (resp === false)
         ?null
         :{emailExists:true}
       })
@@ -48,7 +48,7 @@ validate(control: AbstractControl): Promise<ValidationErrors | null> | Observabl
   return this.http.get<any>(`${base_url}/auth/users/find/${email}/${id}`)
     .pipe(
       map(resp => {
-        console.log(resp)
+        // console.log(resp)
         return (resp === false)
         ?null
         :{emailExists:true}

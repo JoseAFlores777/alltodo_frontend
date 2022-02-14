@@ -14,7 +14,7 @@ const base_url = environment.base_url;
 export class TodoService {
 
   public todos!: Todo[];
-  public todos2!: Todo[];
+  
 
   constructor(
     private http: HttpClient,
@@ -27,10 +27,7 @@ export class TodoService {
       .pipe(
         tap((todos: any) => { 
           
-          this.todos2 = this.filterTodosByToday(todos)
-          console.log('this.todos2', this.todos2)
-          this.todos = todos;
-          console.log(this.todos)
+          this.todos = todos; 
         })
       )
   }
@@ -55,20 +52,6 @@ export class TodoService {
 
 
 
-  filterTodosByToday(todos: any): any {
-    let todos_tmp: Todo[] = todos;
-    let today = new Date();
-    todos_tmp = todos_tmp.filter(todo => {
-      console.log("Primeraaaaaaaaaa",new Date(todo.expirationDate).getDate() == new Date().getDate())
-      console.log("Segundaaaaaaaaaa",new Date().getDate() == new Date().getDate())
-      console.log(new Date(todo.expirationDate).toISOString)
-      return (new Date(todo.expirationDate).getDate() == new Date().getDate())
-    })
-
-    console.log(todos_tmp)
-
-    return todos_tmp;
-  }
 
 
 

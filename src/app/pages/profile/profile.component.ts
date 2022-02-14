@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2, ViewChild, DoCheck } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
@@ -14,7 +14,7 @@ import { UserService } from '../../services/user.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, DoCheck {
 
   public user?: User;
 
@@ -52,6 +52,11 @@ export class ProfileComponent implements OnInit {
     private isEmailExistsWithException_Validator: isEmailExistsWithException,
   ) { }
 
+
+  ngDoCheck(): void {
+  
+  }
+
   ngOnInit(): void {
     this.user = this.authService.user;
   }
@@ -76,7 +81,7 @@ export class ProfileComponent implements OnInit {
   get passErrorsMsj(): string {
     const errors = this.updateUserForm.get('password')?.errors;
 
-    console.log(this.updateUserForm.get('password')?.errors?.minlength);
+    // console.log(this.updateUserForm.get('password')?.errors?.minlength);
     if (errors?.required) {
       return 'The password is required';
     } else if (errors?.strong) {
@@ -119,10 +124,10 @@ export class ProfileComponent implements OnInit {
     this.userService.updateUser(this.user!.id, this.updateUserForm.value)
       .subscribe(
         (resp:any) => {
-          this.authService.validateToken()
+          this.authService.validateToken().subscribe()
           Swal.fire('Great!', "Your changes have been recorded", 'success');
         }, (err) => { 
-          console.log(err)
+          // console.log(err)
           Swal.fire('Error', err.error.msg, 'error');
         }
       );

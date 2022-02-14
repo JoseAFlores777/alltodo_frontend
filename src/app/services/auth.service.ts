@@ -91,7 +91,7 @@ export class AuthService {
             updatedAt,
             isAvailable
           );
-          console.log('resp.user', resp.user);
+          // console.log('resp.user', resp.user);
           this.saveInLocalStorage(resp.jwt);
           return true;
         }),
